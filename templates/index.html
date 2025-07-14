@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATS Keyword Extractor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        background: '#f8fafc',
+                        foreground: '#171717'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="min-h-screen bg-[#f8fafc] flex flex-col">
+    <!-- Header -->
+    <header class="w-full py-3 shadow-sm bg-white">
+        <div class="w-full px-4 flex flex-row items-center justify-between">
+            <h1 class="text-3xl font-extrabold tracking-tight text-left flex items-center gap-2">
+                <span class="text-blue-700">ATS</span>
+                <span class="bg-blue-200 text-blue-700 px-2 rounded font-extrabold">Keyword</span>
+                <span class="text-blue-700">Extractor</span>
+            </h1>
+            <span class="text-xs text-gray-500">AI-powered job description analysis</span>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col items-center justify-center px-4 py-8">
+        <section class="w-full max-w-2xl bg-white rounded-xl shadow-lg p-8 border border-gray-100">
+            <h2 class="text-xl font-semibold mb-2 text-gray-800 text-center">Paste Your Job Description</h2>
+            <p class="mb-6 text-center text-gray-600">
+                Get the best keywords to optimize your resume for Applicant Tracking Systems (ATS).
+            </p>
+            
+            <form id="keywordForm" class="flex flex-col gap-4">
+                <label for="jobdesc" class="font-medium text-gray-700">
+                    Job Description <span class="text-red-500">*</span>
+                </label>
+                <textarea
+                    id="jobdesc"
+                    class="border border-gray-300 rounded-md p-3 min-h-[140px] resize-vertical focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900 text-base"
+                    placeholder="Paste the job description here..."
+                    required
+                ></textarea>
+                <button
+                    type="submit"
+                    id="submitBtn"
+                    class="mt-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md transition-colors disabled:opacity-60 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                >
+                    Extract Keywords
+                </button>
+            </form>
+            
+            <div id="error" class="mt-2 text-red-600 text-center hidden"></div>
+            
+            <div id="keywordList" class="mt-8 hidden">
+                <h3 class="text-lg font-semibold mb-3 text-gray-800 text-center">Top ATS Keywords</h3>
+                <ul id="keywordsContainer" class="flex flex-wrap gap-3 justify-center"></ul>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-6 text-center text-gray-400 text-xs bg-transparent">
+        &copy; <span id="currentYear"></span> ATS Keyword Extractor. All rights reserved.
+    </footer>
+
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        
+        const form = document.getElementById('keywordForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const errorDiv = document.getElementById('error');
+        const keywordList = document.getElementById('keywordList');
+        const keywordsContainer = document.getElementById('keywordsContainer');
+        
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const jobDescription = document.getElementById('jobdesc').value.trim();
+            if (!jobDescription) return;
+            
+            // Show loading state
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `
+                <span class="flex items-center gap-2 justify-center">
+                    <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+                    </svg>
+                    Extracting...
+                </span>
+            `;
+            
+            // Hide previous results and errors
+            errorDiv.classList.add('hidden');
+            keywordList.classList.add('hidden');
+            
+            try {
+                const response = await fetch('/extract-keywords', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ job_description: jobDescription })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok && data.keywords) {
+                    // Display keywords
+                    keywordsContainer.innerHTML = '';
+                    data.keywords.forEach(keyword => {
+                        const li = document.createElement('li');
+                        li.className = 'bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-medium shadow-sm border border-blue-200';
+                        li.textContent = keyword;
+                        keywordsContainer.appendChild(li);
+                    });
+                    keywordList.classList.remove('hidden');
+                } else {
+                    // Show error
+                    errorDiv.textContent = data.error || 'Failed to extract keywords. Please try again.';
+                    errorDiv.classList.remove('hidden');
+                }
+            } catch (err) {
+                errorDiv.textContent = 'Failed to extract keywords. Please try again.';
+                errorDiv.classList.remove('hidden');
+            } finally {
+                // Reset button
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Extract Keywords';
+            }
+        });
+    </script>
+</body>
+</html> 
