@@ -44,5 +44,9 @@ def extract_keywords():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+@app.route('/resume-maker')
+def resume_maker():
+    return render_template('resume_maker.html')
+
 if __name__ == '__main__':
     app.run(debug=True, port=5000) 
