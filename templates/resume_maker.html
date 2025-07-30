@@ -1700,6 +1700,17 @@
         async function rewriteJobDescription(currentPoints, bulletPointsContainer, button, originalText) {
             try {
                 const selectedKeywords = window.selectedKeywordsForRewrite || [];
+                
+                // Debug: Log what we're sending
+                console.log("=== SENDING AI REWRITE REQUEST ===");
+                console.log("Bullet points:", currentPoints);
+                console.log("Selected keywords:", selectedKeywords);
+                console.log("Full request body:", {
+                    bullet_points: currentPoints,
+                    selected_keywords: selectedKeywords
+                });
+                console.log("===================================");
+                
                 const response = await fetch('/ai-rewrite-job-description', {
                     method: 'POST',
                     headers: {
@@ -1766,6 +1777,17 @@
         async function rewriteProjectDescription(currentPoints, bulletPointsContainer, button, originalText) {
             try {
                 const selectedKeywords = window.selectedKeywordsForRewrite || [];
+                
+                // Debug: Log what we're sending
+                console.log("=== SENDING AI REWRITE PROJECT REQUEST ===");
+                console.log("Bullet points:", currentPoints);
+                console.log("Selected keywords:", selectedKeywords);
+                console.log("Full request body:", {
+                    bullet_points: currentPoints,
+                    selected_keywords: selectedKeywords
+                });
+                console.log("=========================================");
+                
                 const response = await fetch('/ai-rewrite-project-description', {
                     method: 'POST',
                     headers: {
