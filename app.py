@@ -132,11 +132,25 @@ def ai_rewrite_job_description():
     try:
         data = request.get_json()
         bullet_points = data.get('bullet_points', [])
+        selected_keywords = data.get('selected_keywords', [])
         
         if not bullet_points:
             return jsonify({'error': 'No bullet points provided'}), 400
         
         # Create a comprehensive prompt for rewriting job descriptions
+        keyword_instruction = ""
+        if selected_keywords:
+            keyword_instruction = f"""
+IMPORTANT: You must naturally incorporate these keywords into the rewritten bullet points: {', '.join(selected_keywords)}
+
+Guidelines for keyword integration:
+- Use the keywords naturally within the context of each bullet point
+- Don't force keywords if they don't fit naturally
+- Maintain professional tone while including keywords
+- Ensure keywords flow naturally with the sentence structure
+- Prioritize readability and impact over keyword stuffing
+"""
+        
         prompt = f"""You are a professional resume writer. Rewrite the following job description bullet points to make them more impactful, professional, and human-like. 
 
 Guidelines:
@@ -146,7 +160,7 @@ Guidelines:
 - Keep each point concise but impactful
 - Focus on results and accomplishments
 - Use industry-standard terminology
-- Make them sound like they were written by a human professional
+- Make them sound like they were written by a human professional{keyword_instruction}
 
 Original bullet points:
 {chr(10).join([f"- {point}" for point in bullet_points])}
@@ -186,11 +200,25 @@ def ai_rewrite_project_description():
     try:
         data = request.get_json()
         bullet_points = data.get('bullet_points', [])
+        selected_keywords = data.get('selected_keywords', [])
         
         if not bullet_points:
             return jsonify({'error': 'No bullet points provided'}), 400
         
         # Create a comprehensive prompt for rewriting project descriptions
+        keyword_instruction = ""
+        if selected_keywords:
+            keyword_instruction = f"""
+IMPORTANT: You must naturally incorporate these keywords into the rewritten bullet points: {', '.join(selected_keywords)}
+
+Guidelines for keyword integration:
+- Use the keywords naturally within the context of each bullet point
+- Don't force keywords if they don't fit naturally
+- Maintain professional tone while including keywords
+- Ensure keywords flow naturally with the sentence structure
+- Prioritize readability and impact over keyword stuffing
+"""
+        
         prompt = f"""You are a professional resume writer. Rewrite the following project description bullet points to make them more impactful, professional, and human-like. 
 
 Guidelines:
@@ -202,7 +230,7 @@ Guidelines:
 - Focus on technical results and accomplishments
 - Use industry-standard terminology
 - Make them sound like they were written by a human professional
-- Emphasize the technical complexity and impact of the project
+- Emphasize the technical complexity and impact of the project{keyword_instruction}
 
 Original bullet points:
 {chr(10).join([f"- {point}" for point in bullet_points])}

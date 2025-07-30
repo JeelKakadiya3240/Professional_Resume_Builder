@@ -89,11 +89,32 @@
                     </div>
                 </div>
 
+                <!-- Job Description for Keywords -->
+                <div class="space-y-4">
+                    <h3 class="text-lg font-semibold text-gray-700 border-b pb-2">Job Description for Keywords</h3>
+                    <div class="space-y-3">
+                        <textarea id="jobDescriptionForKeywords" name="jobDescriptionForKeywords" rows="4"
+                                  class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#8B4513]"
+                                  placeholder="Paste the job description to extract relevant keywords for your resume..."></textarea>
+                        <button type="button" id="extractKeywordsBtn" 
+                                class="bg-[#8B4513] hover:bg-[#A0522D] text-white font-semibold py-2 px-4 rounded-md transition-colors">
+                            Extract Keywords
+                        </button>
+                    </div>
+                    
+                    <!-- Keywords Display -->
+                    <div id="keywordsContainer" class="hidden">
+                        <h4 class="text-sm font-medium text-gray-700 mb-2">Extracted Keywords:</h4>
+                        <div id="keywordsList" class="flex flex-wrap gap-2 mb-3"></div>
+                        <div class="text-xs text-gray-500">Selected keywords will be available for AI rewriting</div>
+                    </div>
+                </div>
+
                 <!-- Professional Summary -->
                 <div class="space-y-4">
                     <h3 class="text-lg font-semibold text-gray-700 border-b pb-2">Professional Summary *</h3>
                     <textarea id="summary" name="summary" required rows="4"
-                              class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                              class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#8B4513]"
                               placeholder="Write a compelling professional summary..."></textarea>
                 </div>
 
@@ -257,9 +278,9 @@
 
                 <!-- Action Buttons -->
                 <div class="flex gap-4 pt-4">
-                    <button type="button" id="previewBtn" class="flex-1 bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-4 rounded-md transition-colors">
-                        Refresh Preview
-                    </button>
+                                    <button type="button" id="previewBtn" class="flex-1 bg-[#8B4513] hover:bg-[#A0522D] text-white font-semibold py-3 px-4 rounded-md transition-colors">
+                    Refresh Preview
+                </button>
                     <button type="button" id="downloadPdfBtn" class="flex-1 bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-4 rounded-md transition-colors">
                         Download PDF
                     </button>
@@ -269,13 +290,38 @@
 
         <!-- Right Side - Preview -->
         <section class="resume-preview-section lg:w-1/2 bg-gray-50 p-6 overflow-y-auto">
-            <h2 class="text-2xl font-bold text-gray-800 mb-6">Resume Preview</h2>
-            <div id="resumePreview" class="bg-white border border-gray-200 rounded-lg shadow-sm">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-2xl font-bold text-gray-800">Resume Preview</h2>
+                <div class="flex items-center gap-4">
+                    <!-- Keyword Coverage Score -->
+                    <div id="keywordScoreContainer" class="hidden">
+                        <div class="flex items-center gap-2">
+                            <div class="text-sm font-medium text-gray-700">Keywords Used:</div>
+                            <div id="keywordScore" class="text-lg font-bold text-[#8B4513]">0</div>
+                            <div class="text-sm text-gray-500">/</div>
+                            <div id="keywordTotal" class="text-lg font-bold text-gray-700">0</div>
+                            <div class="text-xs text-gray-500">keywords</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs text-gray-500">Auto-updates as you type</span>
+                        <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                    </div>
+                </div>
+            </div>
+            <div id="resumePreview" class="bg-white border border-gray-200 rounded-lg shadow-sm min-h-[600px]">
                 <div class="text-center text-gray-500 py-20">
                     <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                     </svg>
+                    <h3 class="text-lg font-semibold mb-2">Resume Preview</h3>
                     <p class="mt-2 text-sm">Start typing in the form to see your resume preview update in real-time.</p>
+                    <div class="mt-4 flex items-center justify-center gap-2 text-xs text-gray-400">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                        Real-time updates
+                    </div>
                 </div>
             </div>
         </section>
@@ -351,9 +397,125 @@
                 overflow: hidden;
             }
         }
+        
+        /* Keyword highlighting styles */
+        .keyword-highlight {
+            background-color: rgba(139, 69, 19, 0.15);
+            border-radius: 3px;
+            padding: 1px 2px;
+            border: 1px solid rgba(139, 69, 19, 0.3);
+            font-weight: 500;
+            color: #8B4513;
+        }
     </style>
     
     <script>
+        // Global keywords storage
+        let extractedKeywords = [];
+        
+        // Keyword extraction functionality
+        document.getElementById('extractKeywordsBtn').addEventListener('click', async function() {
+            const jobDescription = document.getElementById('jobDescriptionForKeywords').value.trim();
+            
+            if (!jobDescription) {
+                alert('Please enter a job description first.');
+                return;
+            }
+            
+            // Show loading state
+            const btn = this;
+            btn.disabled = true;
+            btn.innerHTML = `
+                <svg class="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+                </svg>
+                Extracting...
+            `;
+            
+            try {
+                const response = await fetch('/extract-keywords', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ job_description: jobDescription })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok && data.keywords) {
+                    extractedKeywords = data.keywords;
+                    displayKeywords(data.keywords);
+                    saveKeywordsToStorage(data.keywords);
+                    // Calculate keyword coverage with new keywords
+                    calculateKeywordCoverage();
+                } else {
+                    alert('Failed to extract keywords. Please try again.');
+                }
+            } catch (err) {
+                alert('Failed to extract keywords. Please check your connection.');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Extract Keywords';
+            }
+        });
+        
+        // Display keywords
+        function displayKeywords(keywords) {
+            const container = document.getElementById('keywordsContainer');
+            const list = document.getElementById('keywordsList');
+            
+            list.innerHTML = '';
+            keywords.forEach(keyword => {
+                const keywordDiv = document.createElement('div');
+                keywordDiv.className = 'bg-[#8B4513] text-white px-3 py-1 rounded-full text-sm cursor-pointer hover:bg-[#A0522D] transition-colors';
+                keywordDiv.textContent = keyword;
+                keywordDiv.onclick = () => toggleKeywordSelection(keywordDiv, keyword);
+                list.appendChild(keywordDiv);
+            });
+            
+            container.classList.remove('hidden');
+        }
+        
+        // Toggle keyword selection
+        function toggleKeywordSelection(element, keyword) {
+            element.classList.toggle('bg-[#8B4513]');
+            element.classList.toggle('bg-green-600');
+            
+            if (element.classList.contains('bg-green-600')) {
+                if (!window.selectedKeywords) window.selectedKeywords = [];
+                window.selectedKeywords.push(keyword);
+            } else {
+                window.selectedKeywords = window.selectedKeywords.filter(k => k !== keyword);
+            }
+            
+            saveKeywordsToStorage(extractedKeywords);
+        }
+        
+        // Save keywords to localStorage
+        function saveKeywordsToStorage(keywords) {
+            localStorage.setItem('extractedKeywords', JSON.stringify(keywords));
+            localStorage.setItem('selectedKeywords', JSON.stringify(window.selectedKeywords || []));
+        }
+        
+        // Load keywords from localStorage
+        function loadKeywordsFromStorage() {
+            const keywords = localStorage.getItem('extractedKeywords');
+            const selected = localStorage.getItem('selectedKeywords');
+            
+            if (keywords) {
+                extractedKeywords = JSON.parse(keywords);
+                displayKeywords(extractedKeywords);
+                // Calculate initial keyword coverage
+                calculateKeywordCoverage();
+            }
+            
+            if (selected) {
+                window.selectedKeywords = JSON.parse(selected);
+            }
+        }
+        
         // Save form data to localStorage
         function saveFormData() {
             const form = document.getElementById('resumeForm');
@@ -640,6 +802,8 @@
                 // Set a new timeout to update preview after user stops typing
                 previewTimeout = setTimeout(() => {
                     updateResumePreview();
+                    // Also calculate keyword coverage in real-time
+                    calculateKeywordCoverage();
                 }, 500); // 500ms delay
             });
             
@@ -647,11 +811,26 @@
                 // Update immediately on change events (dropdowns, checkboxes, etc.)
                 clearTimeout(previewTimeout);
                 updateResumePreview();
+                // Also calculate keyword coverage immediately
+                calculateKeywordCoverage();
             });
         }
         
         // Update resume preview with current form data
         async function updateResumePreview() {
+            const previewContainer = document.getElementById('resumePreview');
+            const previewBtn = document.getElementById('previewBtn');
+            
+            // Show loading state
+            previewBtn.disabled = true;
+            previewBtn.innerHTML = `
+                <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+                </svg>
+                Updating...
+            `;
+            
             const formData = new FormData(document.getElementById('resumeForm'));
             const data = {};
             
@@ -710,12 +889,6 @@
                 }
             });
             
-            // Debug logging
-            console.log('Experience items found:', experienceItems.length);
-            console.log('Project items found:', projectItems.length);
-            console.log('Job description data:', data.job_description);
-            console.log('Project description data:', data.project_description);
-            
             // Add template
             data.template = document.getElementById('template').value;
             
@@ -733,21 +906,176 @@
                 if (response.ok && result.resume_html) {
                     // Apply pagination to the resume content
                     const paginatedHtml = applyPagination(result.resume_html);
-                    document.getElementById('resumePreview').innerHTML = paginatedHtml;
+                    previewContainer.innerHTML = paginatedHtml;
                     // Store the HTML for download
                     window.currentResumeHtml = result.resume_html;
+                    
+                    // Calculate and display keyword coverage
+                    calculateKeywordCoverage();
+                    
+                    // Show success message
+                    showPreviewMessage('Preview updated successfully!', 'success');
                 } else {
                     console.error('Failed to update preview:', result.error);
+                    showPreviewMessage('Failed to update preview. Please try again.', 'error');
                 }
             } catch (err) {
                 console.error('Failed to update preview:', err);
+                showPreviewMessage('Network error. Please check your connection.', 'error');
+            } finally {
+                // Reset button state
+                previewBtn.disabled = false;
+                previewBtn.textContent = 'Refresh Preview';
             }
+        }
+        
+        // Function to show preview messages
+        function showPreviewMessage(message, type) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `fixed top-4 right-4 px-4 py-2 rounded-md text-white text-sm z-50 ${
+                type === 'success' ? 'bg-green-500' : 'bg-red-500'
+            }`;
+            messageDiv.textContent = message;
+            
+            document.body.appendChild(messageDiv);
+            
+            // Remove message after 3 seconds
+            setTimeout(() => {
+                messageDiv.remove();
+            }, 3000);
+        }
+        
+        // Calculate keyword coverage score
+        function calculateKeywordCoverage() {
+            if (!extractedKeywords || extractedKeywords.length === 0) {
+                document.getElementById('keywordScoreContainer').classList.add('hidden');
+                return;
+            }
+            
+            // Get all text content from the resume
+            const resumeText = getResumeText();
+            const foundKeywords = [];
+            
+            // Check each keyword against resume text
+            extractedKeywords.forEach(keyword => {
+                const regex = new RegExp(keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
+                if (regex.test(resumeText)) {
+                    foundKeywords.push(keyword);
+                }
+            });
+            
+            // Calculate score
+            const score = Math.round((foundKeywords.length / extractedKeywords.length) * 100);
+            const scoreElement = document.getElementById('keywordScore');
+            const totalElement = document.getElementById('keywordTotal');
+            const container = document.getElementById('keywordScoreContainer');
+            
+            // Update display with actual counts
+            scoreElement.textContent = foundKeywords.length;
+            totalElement.textContent = extractedKeywords.length;
+            
+            // Color coding based on percentage
+            if (score >= 80) {
+                scoreElement.className = 'text-lg font-bold text-green-600';
+            } else if (score >= 60) {
+                scoreElement.className = 'text-lg font-bold text-yellow-600';
+            } else {
+                scoreElement.className = 'text-lg font-bold text-red-600';
+            }
+            
+            // Show container
+            container.classList.remove('hidden');
+            
+            // Highlight keywords in the preview
+            highlightKeywordsInPreview(foundKeywords);
+            
+            return { score, foundKeywords, totalKeywords: extractedKeywords.length };
+        }
+        
+        // Highlight keywords in the resume preview
+        function highlightKeywordsInPreview(foundKeywords) {
+            const previewContainer = document.getElementById('resumePreview');
+            if (!previewContainer || !foundKeywords.length) return;
+            
+            // Get the resume content
+            const resumeContent = previewContainer.querySelector('.resume-page-content');
+            if (!resumeContent) return;
+            
+            // Create a copy of the content for highlighting
+            let content = resumeContent.innerHTML;
+            
+            // Highlight each found keyword
+            foundKeywords.forEach(keyword => {
+                const escapedKeyword = keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                const regex = new RegExp(`(${escapedKeyword})`, 'gi');
+                content = content.replace(regex, '<span class="keyword-highlight">$1</span>');
+            });
+            
+            // Update the preview content
+            resumeContent.innerHTML = content;
+        }
+        
+        // Get all text content from resume form
+        function getResumeText() {
+            const form = document.getElementById('resumeForm');
+            const formData = new FormData(form);
+            let text = '';
+            
+            // Collect all text inputs
+            for (let [key, value] of formData.entries()) {
+                if (value && typeof value === 'string') {
+                    text += ' ' + value.toLowerCase();
+                }
+            }
+            
+            // Add bullet points from experiences
+            const experienceItems = document.querySelectorAll('.experience-item');
+            experienceItems.forEach(item => {
+                const bulletPoints = item.querySelectorAll('input[name="job_description_points[]"]');
+                bulletPoints.forEach(input => {
+                    if (input.value.trim()) {
+                        text += ' ' + input.value.toLowerCase();
+                    }
+                });
+            });
+            
+            // Add bullet points from projects
+            const projectItems = document.querySelectorAll('.project-item');
+            projectItems.forEach(item => {
+                const bulletPoints = item.querySelectorAll('input[name="project_description_points[]"]');
+                bulletPoints.forEach(input => {
+                    if (input.value.trim()) {
+                        text += ' ' + input.value.toLowerCase();
+                    }
+                });
+            });
+            
+            return text;
         }
         
         // Function to apply single page constraint to resume content
         function applyPagination(resumeHtml) {
+            // Highlight keywords in the HTML content
+            const highlightedHtml = highlightKeywordsInGeneratedHTML(resumeHtml);
+            
             // Always return only one page with overflow hidden
-            return `<div class="resume-page" style="overflow: hidden;"><div class="resume-page-content">${resumeHtml}</div></div>`;
+            return `<div class="resume-page" style="overflow: hidden;"><div class="resume-page-content">${highlightedHtml}</div></div>`;
+        }
+        
+        // Function to highlight keywords in the generated HTML
+        function highlightKeywordsInGeneratedHTML(htmlContent) {
+            if (!extractedKeywords || extractedKeywords.length === 0) return htmlContent;
+            
+            let highlightedContent = htmlContent;
+            
+            // Highlight each keyword
+            extractedKeywords.forEach(keyword => {
+                const escapedKeyword = keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                const regex = new RegExp(`(${escapedKeyword})`, 'gi');
+                highlightedContent = highlightedContent.replace(regex, '<span class="keyword-highlight">$1</span>');
+            });
+            
+            return highlightedContent;
         }
         
         // Add Experience
@@ -935,6 +1263,7 @@
         
         // Load saved data and setup auto-save
         loadFormData();
+        loadKeywordsFromStorage();
         setupAutoSave();
         setupRealTimePreview();
 
@@ -1219,6 +1548,66 @@
             }
         });
 
+        // Add keyword selection popup
+        const popup = document.createElement('div');
+        popup.id = 'keywordSelectionPopup';
+        popup.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden';
+        popup.innerHTML = `
+            <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+                <h3 class="text-lg font-semibold mb-4">Select Keywords to Include</h3>
+                <p class="text-sm text-gray-600 mb-4">Choose keywords to naturally incorporate into your bullet point:</p>
+                <div id="keywordSelectionList" class="space-y-2 mb-4 max-h-60 overflow-y-auto"></div>
+                <div class="flex justify-end gap-2">
+                    <button id="cancelKeywordSelection" class="px-4 py-2 text-gray-600 hover:text-gray-800">Cancel</button>
+                    <button id="confirmKeywordSelection" class="px-4 py-2 bg-[#8B4513] text-white rounded hover:bg-[#A0522D]">Confirm</button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(popup);
+        
+        // Setup popup event listeners
+        document.getElementById('cancelKeywordSelection').onclick = () => {
+            popup.classList.add('hidden');
+        };
+        
+        document.getElementById('confirmKeywordSelection').onclick = () => {
+            const selectedKeywords = Array.from(document.querySelectorAll('#keywordSelectionList input:checked')).map(input => input.value);
+            window.selectedKeywordsForRewrite = selectedKeywords;
+            popup.classList.add('hidden');
+            
+            // Proceed with AI rewrite
+            if (window.pendingRewriteFunction) {
+                window.pendingRewriteFunction();
+                window.pendingRewriteFunction = null;
+            }
+        };
+        
+        // Show keyword selection popup
+        function showKeywordSelectionPopup(callback) {
+            const popup = document.getElementById('keywordSelectionPopup');
+            const list = document.getElementById('keywordSelectionList');
+            
+            if (!extractedKeywords || extractedKeywords.length === 0) {
+                alert('No keywords available. Please extract keywords from a job description first.');
+                return false;
+            }
+            
+            list.innerHTML = '';
+            extractedKeywords.forEach(keyword => {
+                const div = document.createElement('div');
+                div.className = 'flex items-center space-x-2';
+                div.innerHTML = `
+                    <input type="checkbox" id="kw_${keyword}" value="${keyword}" class="rounded">
+                    <label for="kw_${keyword}" class="text-sm">${keyword}</label>
+                `;
+                list.appendChild(div);
+            });
+            
+            window.pendingRewriteFunction = callback;
+            popup.classList.remove('hidden');
+            return true;
+        }
+        
         // AI Rewrite functionality
         document.addEventListener('click', function(e) {
             if (e.target.classList.contains('ai-rewrite-btn')) {
@@ -1239,21 +1628,29 @@
                     return;
                 }
                 
-                // Show loading state
-                const originalText = e.target.textContent;
-                e.target.disabled = true;
-                e.target.innerHTML = `
-                    <span class="flex items-center gap-1">
-                        <svg class="animate-spin h-3 w-3 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
-                        </svg>
-                        Rewriting...
-                    </span>
-                `;
+                // Show keyword selection popup first
+                const rewriteFunction = () => {
+                    // Show loading state
+                    const originalText = e.target.textContent;
+                    e.target.disabled = true;
+                    e.target.innerHTML = `
+                        <span class="flex items-center gap-1">
+                            <svg class="animate-spin h-3 w-3 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+                            </svg>
+                            Rewriting...
+                        </span>
+                    `;
+                    
+                    // Call AI rewrite API with keywords
+                    rewriteJobDescription(currentPoints, bulletPointsContainer, e.target, originalText);
+                };
                 
-                // Call AI rewrite API
-                rewriteJobDescription(currentPoints, bulletPointsContainer, e.target, originalText);
+                if (!showKeywordSelectionPopup(rewriteFunction)) {
+                    // No keywords available, proceed without keywords
+                    rewriteFunction();
+                }
             }
             
             if (e.target.classList.contains('ai-rewrite-project-btn')) {
@@ -1274,33 +1671,43 @@
                     return;
                 }
                 
-                // Show loading state
-                const originalText = e.target.textContent;
-                e.target.disabled = true;
-                e.target.innerHTML = `
-                    <span class="flex items-center gap-1">
-                        <svg class="animate-spin h-3 w-3 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
-                        </svg>
-                        Rewriting...
-                    </span>
-                `;
+                // Show keyword selection popup first
+                const rewriteFunction = () => {
+                    // Show loading state
+                    const originalText = e.target.textContent;
+                    e.target.disabled = true;
+                    e.target.innerHTML = `
+                        <span class="flex items-center gap-1">
+                            <svg class="animate-spin h-3 w-3 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+                            </svg>
+                            Rewriting...
+                        </span>
+                    `;
+                    
+                    // Call AI rewrite API for projects with keywords
+                    rewriteProjectDescription(currentPoints, bulletPointsContainer, e.target, originalText);
+                };
                 
-                // Call AI rewrite API for projects
-                rewriteProjectDescription(currentPoints, bulletPointsContainer, e.target, originalText);
+                if (!showKeywordSelectionPopup(rewriteFunction)) {
+                    // No keywords available, proceed without keywords
+                    rewriteFunction();
+                }
             }
         });
 
         async function rewriteJobDescription(currentPoints, bulletPointsContainer, button, originalText) {
             try {
+                const selectedKeywords = window.selectedKeywordsForRewrite || [];
                 const response = await fetch('/ai-rewrite-job-description', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        bullet_points: currentPoints
+                        bullet_points: currentPoints,
+                        selected_keywords: selectedKeywords
                     })
                 });
                 
@@ -1358,13 +1765,15 @@
 
         async function rewriteProjectDescription(currentPoints, bulletPointsContainer, button, originalText) {
             try {
+                const selectedKeywords = window.selectedKeywordsForRewrite || [];
                 const response = await fetch('/ai-rewrite-project-description', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        bullet_points: currentPoints
+                        bullet_points: currentPoints,
+                        selected_keywords: selectedKeywords
                     })
                 });
                 
