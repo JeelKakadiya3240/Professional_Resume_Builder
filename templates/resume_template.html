@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            color: #111;
+            background: white;
+            font-size: 11pt;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 100%;
+            min-height: 100%;
+            margin: 0;
+            padding: 0;
+            background: white;
+            box-sizing: border-box;
+            height: 100vh;
+        }
+        .resume-header {
+            text-align: center;
+            margin-bottom: 8px;
+        }
+        .resume-header .name {
+            font-size: 2.2em;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        .resume-header .contact {
+            margin-top: 4px;
+            font-size: 1.1em;
+        }
+        .section-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            border-bottom: 3px solid #111;
+            margin: 14px 0 8px 0;
+            letter-spacing: 1px;
+        }
+        .edu-row, .exp-row, .proj-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0;
+        }
+        .edu-left, .exp-left, .proj-left {
+            flex: 1 1 60%;
+        }
+        .edu-right, .exp-right, .proj-right {
+            flex: 1 1 40%;
+            text-align: right;
+            min-width: 160px;
+        }
+        .edu-univ, .exp-company, .proj-title {
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        .edu-degree, .exp-role, .proj-role {
+            font-style: italic;
+            margin-top: -2px;
+        }
+        .exp-location, .proj-location {
+            font-style: italic;
+            font-size: 1em;
+            margin-top: 2px;
+        }
+        .exp-dates, .proj-dates, .edu-dates {
+            font-weight: bold;
+        }
+        .edu-gpa, .exp-gpa, .proj-gpa {
+            font-style: italic;
+            margin-top: 2px;
+        }
+        ul.bullets {
+            margin-top: 3px;
+            margin-bottom: 12px;
+            padding-left: 16px;
+            list-style-type: disc;
+        }
+        ul.bullets li {
+            margin-bottom: 2px;
+            text-align: justify;
+            text-justify: inter-word;
+            line-height: 1.5;
+        }
+        .exp-left,
+        .exp-right {
+            margin: 0;
+            padding: 0;
+        }
+        .exp-company,
+        .exp-role {
+            margin-bottom: 2px;
+        }
+        .skills-section {
+            margin-top: 8px;
+        }
+        .skills-category {
+            font-weight: bold;
+            display: inline;
+        }
+        .skills-list {
+            display: inline;
+            margin-left: 4px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- Header -->
+    <div class="resume-header">
+        <div class="name">{{ data.name|upper }}</div>
+        <div class="contact">
+            {{ data.phone }} | {{ data.email }} | {{ data.location }} | {{ data.linkedin }}
+        </div>
+    </div>
+
+    <!-- Professional Summary -->
+    {% if data.summary %}
+    <div class="section-title">PROFESSIONAL SUMMARY</div>
+    <div style="margin-bottom: 12px; text-align: justify; text-justify: inter-word;">{{ data.summary }}</div>
+    {% endif %}
+
+    <!-- Education -->
+    {% if data.degree and data.degree[0] %}
+    <div class="section-title">EDUCATION</div>
+    {% for i in range(data.degree|length) %}
+    {% if data.degree[i] %}
+    <div class="edu-row">
+        <div class="edu-left">
+            <div class="edu-univ">{{ data.institution[i] if data.institution and data.institution[i] else 'University Name' }}</div>
+            <div class="edu-degree">{{ data.degree[i] }}{% if data.program and data.program[i] %}, {{ data.program[i] }}{% endif %}</div>
+        </div>
+        <div class="edu-right">
+            <div class="edu-dates">
+                {% if data.start_date and data.start_date[i] %}{{ data.start_date[i] }}{% endif %}
+                {% if data.end_date and data.end_date[i] %} - {{ data.end_date[i] }}{% endif %}
+            </div>
+            {% if data.gpa and data.gpa[i] %}
+            <div class="edu-gpa">GPA: {{ data.gpa[i] }}</div>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+
+    <!-- Professional Experience -->
+    {% if data.job_title and data.job_title[0] %}
+    <div class="section-title">PROFESSIONAL EXPERIENCE</div>
+    {% for i in range(data.job_title|length) %}
+    {% if data.job_title[i] %}
+    <div class="exp-row">
+        <div class="exp-left">
+            <div class="exp-company">{{ data.company[i] if data.company and data.company[i] else 'Company Name' }}</div>
+            <div class="exp-role">{{ data.job_title[i] }}</div>
+        </div>
+        <div class="exp-right">
+            <div class="exp-location">{% if data.exp_location and data.exp_location[i] %}{{ data.exp_location[i] }}{% endif %}</div>
+            <div class="exp-dates">
+                {% if data.start_date and data.start_date[i] %}{{ data.start_date[i] }}{% endif %}
+                {% if data.end_date and data.end_date[i] %} - {{ data.end_date[i] }}{% endif %}
+            </div>
+        </div>
+    </div>
+    {% if data.job_description and data.job_description[i] %}
+    <ul class="bullets">
+        {% for point in data.job_description[i] %}
+        {% if point.strip() %}
+        <li>{{ point.strip() }}.</li>
+        {% endif %}
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+
+    <!-- Projects & Outside Experience -->
+    {% if data.project_title and data.project_title[0] %}
+    <div class="section-title">PROJECTS & OUTSIDE EXPERIENCE</div>
+    {% for i in range(data.project_title|length) %}
+    {% if data.project_title[i] %}
+    <div class="proj-row">
+        <div class="proj-left">
+            <div class="proj-title">{{ data.project_title[i] }}</div>
+            <div class="proj-role">{% if data.project_role and data.project_role[i] %}{{ data.project_role[i] }}{% endif %}</div>
+        </div>
+        <div class="proj-right">
+            <div class="proj-location">{% if data.project_location and data.project_location[i] %}{{ data.project_location[i] }}{% endif %}</div>
+            <div class="proj-dates">
+                {% if data.project_start and data.project_start[i] %}{{ data.project_start[i] }}{% endif %}
+                {% if data.project_end and data.project_end[i] %} - {{ data.project_end[i] }}{% endif %}
+            </div>
+        </div>
+    </div>
+    {% if data.project_description and data.project_description[i] %}
+    <ul class="bullets">
+        {% for point in data.project_description[i] %}
+        {% if point.strip() %}
+        <li>{{ point.strip() }}.</li>
+        {% endif %}
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+
+    <!-- Skills -->
+    {% if data.skills %}
+    <div class="section-title">SKILLS</div>
+    <div class="skills-section">
+        {% for skill_cat in data.skills.split(';') %}
+            {% set parts = skill_cat.split(':') %}
+            {% if parts|length == 2 %}
+                <span class="skills-category">{{ parts[0] }}:</span>
+                <span class="skills-list">{{ parts[1] }}</span><br/>
+            {% else %}
+                <span class="skills-list">{{ skill_cat }}</span><br/>
+            {% endif %}
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+</body>
+</html> 

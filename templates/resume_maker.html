@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resume Maker - Coming Soon</title>
+    <title>Resume Maker</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -30,79 +30,1426 @@
         </div>
     </header>
 
-    <!-- Main Content -->
-    <main class="flex-1 flex flex-col items-center justify-center px-4 py-8">
-        <section class="w-full max-w-2xl bg-white rounded-xl shadow-lg p-12 border border-gray-100 text-center">
-            <!-- Coming Soon Icon -->
-            <div class="mb-8">
-                <div class="mx-auto w-24 h-24 bg-purple-100 rounded-full flex items-center justify-center mb-6">
-                    <svg class="w-12 h-12 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
-                </div>
-            </div>
+    <style>
+        .resume-main {
+            height: 85vh;
+            min-height: 600px;
+            display: flex;
+            flex-direction: row;
+            gap: 1.5rem;
+        }
+        .resume-form-section {
+            height: 100%;
+            overflow-y: auto;
+        }
+        .resume-preview-section {
+            height: 100%;
+            overflow-y: auto;
+        }
+    </style>
 
-            <!-- Coming Soon Text -->
-            <h2 class="text-4xl font-bold text-gray-800 mb-4">Coming Soon</h2>
-            <h3 class="text-2xl font-semibold text-purple-600 mb-6">Resume Maker</h3>
+    <!-- Main Content - Left Right Layout -->
+    <main class="resume-main">
+        <!-- Left Side - Form -->
+        <section class="resume-form-section lg:w-1/2 bg-white p-6 border-r border-gray-200 overflow-y-auto">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">Resume Information</h2>
             
-            <p class="text-lg text-gray-600 mb-8 leading-relaxed">
-                We're working hard to bring you an amazing resume maker that will help you create 
-                professional resumes in minutes. Stay tuned for powerful features like AI-powered 
-                content suggestions, multiple templates, and instant PDF downloads.
-            </p>
+            <form id="resumeForm" class="space-y-6">
+                <!-- Personal Information -->
+                <div class="space-y-4">
+                    <h3 class="text-lg font-semibold text-gray-700 border-b pb-2">Personal Information</h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
+                            <input type="text" id="name" name="name" required
+                                   class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500">
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email *</label>
+                            <input type="email" id="email" name="email" required
+                                   class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500">
+                        </div>
+                        <div>
+                            <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Phone *</label>
+                            <input type="tel" id="phone" name="phone" required
+                                   class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500">
+                        </div>
+                        <div>
+                            <label for="location" class="block text-sm font-medium text-gray-700 mb-1">Location</label>
+                            <input type="text" id="location" name="location"
+                                   class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label for="linkedin" class="block text-sm font-medium text-gray-700 mb-1">LinkedIn URL</label>
+                        <input type="url" id="linkedin" name="linkedin"
+                               class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500">
+                    </div>
+                </div>
 
-            <!-- Features Preview -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <div class="bg-purple-50 p-4 rounded-lg">
-                    <div class="text-purple-600 text-2xl mb-2">🤖</div>
-                    <h4 class="font-semibold text-gray-800 mb-2">AI-Powered</h4>
-                    <p class="text-sm text-gray-600">Smart content suggestions and optimization</p>
+                <!-- Professional Summary -->
+                <div class="space-y-4">
+                    <h3 class="text-lg font-semibold text-gray-700 border-b pb-2">Professional Summary *</h3>
+                    <textarea id="summary" name="summary" required rows="4"
+                              class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                              placeholder="Write a compelling professional summary..."></textarea>
                 </div>
-                <div class="bg-purple-50 p-4 rounded-lg">
-                    <div class="text-purple-600 text-2xl mb-2">📄</div>
-                    <h4 class="font-semibold text-gray-800 mb-2">Multiple Templates</h4>
-                    <p class="text-sm text-gray-600">Professional designs for every industry</p>
-                </div>
-                <div class="bg-purple-50 p-4 rounded-lg">
-                    <div class="text-purple-600 text-2xl mb-2">⚡</div>
-                    <h4 class="font-semibold text-gray-800 mb-2">Instant Download</h4>
-                    <p class="text-sm text-gray-600">PDF format ready for applications</p>
-                </div>
-            </div>
 
-            <!-- Progress Bar -->
-            <div class="mb-8">
-                <div class="flex justify-between text-sm text-gray-600 mb-2">
-                    <span>Development Progress</span>
-                    <span>75%</span>
+                <!-- Skills -->
+                <div class="space-y-4">
+                    <h3 class="text-lg font-semibold text-gray-700 border-b pb-2">Skills</h3>
+                    <textarea id="skills" name="skills" rows="3"
+                              class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                              placeholder="Enter skills separated by commas (e.g., Python, JavaScript, React)"></textarea>
                 </div>
-                <div class="w-full bg-gray-200 rounded-full h-3">
-                    <div class="bg-purple-600 h-3 rounded-full" style="width: 75%"></div>
-                </div>
-            </div>
 
-            <!-- Notification Signup -->
-            <div class="bg-gray-50 p-6 rounded-lg">
-                <h4 class="font-semibold text-gray-800 mb-3">Get Notified When We Launch</h4>
-                <div class="flex gap-3 max-w-md mx-auto">
-                    <input type="email" placeholder="Enter your email" 
-                           class="flex-1 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500">
-                    <button class="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-4 rounded-md transition-colors">
-                        Notify Me
+                <!-- Experience -->
+                <div class="space-y-4">
+                    <h3 class="text-lg font-semibold text-gray-700 border-b pb-2">Work Experience</h3>
+                    <div id="experienceContainer" class="space-y-4">
+                        <div class="experience-item border border-gray-200 rounded-lg p-4">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Job Title</label>
+                                    <input type="text" name="job_title[]" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Company</label>
+                                    <input type="text" name="company[]" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Start Date</label>
+                                    <input type="month" name="start_date[]" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">End Date</label>
+                                    <input type="month" name="end_date[]" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-purple-500">
+                                </div>
+                            </div>
+                            <div class="space-y-3">
+                                <div class="flex justify-between items-center">
+                                    <label class="block text-sm font-medium text-gray-700">Job Description (Bullet Points)</label>
+                                    <div class="flex gap-2">
+                                        <button type="button" class="ai-rewrite-btn bg-blue-600 hover:bg-blue-700 text-white text-xs px-3 py-1 rounded-md transition-colors">🤖 AI Rewrite</button>
+                                        <button type="button" class="add-bullet-point text-purple-600 hover:text-purple-800 text-sm font-medium">+ Add Point</button>
+                                    </div>
+                                </div>
+                                <div class="job-description-points space-y-2">
+                                    <div class="bullet-point-item flex gap-2" draggable="true">
+                                        <div class="drag-handle cursor-move text-gray-400 hover:text-gray-600 px-2 py-2 flex items-center">
+                                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M7 2a2 2 0 1 1 .001 4.001A2 2 0 0 1 7 2zm0 6a2 2 0 1 1 .001 4.001A2 2 0 0 1 7 8zm0 6a2 2 0 1 1 .001 4.001A2 2 0 0 1 7 14zm6-8a2 2 0 1 1-.001-4.001A2 2 0 0 1 13 6zm0 2a2 2 0 1 1 .001 4.001A2 2 0 0 1 13 8zm0 6a2 2 0 1 1 .001 4.001A2 2 0 0 1 13 14z"/>
+                                            </svg>
+                                        </div>
+                                        <input type="text" name="job_description_points[]" placeholder="Bullet point..." class="flex-1 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500">
+                                        <button type="button" class="remove-bullet-point text-red-500 hover:text-red-700 px-2 py-2 text-sm font-medium" style="display: none;">×</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" id="addExperience" class="text-purple-600 hover:text-purple-800 text-sm font-medium">+ Add Experience</button>
+                </div>
+
+                <!-- Education -->
+                <div class="space-y-4">
+                    <h3 class="text-lg font-semibold text-gray-700 border-b pb-2">Education</h3>
+                    <div id="educationContainer" class="space-y-4">
+                        <div class="education-item border border-gray-200 rounded-lg p-4">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Degree</label>
+                                    <input type="text" name="degree[]" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Program / Major</label>
+                                    <input type="text" name="program[]" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Institution</label>
+                                    <input type="text" name="institution[]" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Location</label>
+                                    <input type="text" name="education_location[]" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Start Date</label>
+                                    <input type="text" name="start_date[]" placeholder="e.g. January 2024" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">End Date</label>
+                                    <input type="text" name="end_date[]" placeholder="e.g. May 2026" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">GPA (Optional)</label>
+                                    <input type="text" name="gpa[]" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" id="addEducation" class="text-purple-600 hover:text-purple-800 text-sm font-medium">+ Add Education</button>
+                </div>
+
+                <!-- Projects -->
+                <div class="space-y-4">
+                    <h3 class="text-lg font-semibold text-gray-700 border-b pb-2">Projects</h3>
+                    <div id="projectContainer" class="space-y-4">
+                        <div class="project-item border border-gray-200 rounded-lg p-4">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Project Title</label>
+                                    <input type="text" name="project_title[]" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Your Role</label>
+                                    <input type="text" name="project_role[]" placeholder="e.g. Lead Developer, Team Member" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Project Location</label>
+                                    <input type="text" name="project_location[]" placeholder="e.g. GitHub, University, Company" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Start Date</label>
+                                    <input type="text" name="project_start[]" placeholder="e.g. January 2024" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">End Date</label>
+                                    <input type="text" name="project_end[]" placeholder="e.g. May 2024" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500">
+                                </div>
+                            </div>
+                            <div class="space-y-3">
+                                <div class="flex justify-between items-center">
+                                    <label class="block text-sm font-medium text-gray-700">Project Description (Bullet Points)</label>
+                                    <div class="flex gap-2">
+                                        <button type="button" class="ai-rewrite-project-btn bg-blue-600 hover:bg-blue-700 text-white text-xs px-3 py-1 rounded-md transition-colors">🤖 AI Rewrite</button>
+                                        <button type="button" class="add-project-bullet-point text-purple-600 hover:text-purple-800 text-sm font-medium">+ Add Point</button>
+                                    </div>
+                                </div>
+                                <div class="project-description-points space-y-2">
+                                    <div class="bullet-point-item flex gap-2" draggable="true">
+                                        <div class="drag-handle cursor-move text-gray-400 hover:text-gray-600 px-2 py-2 flex items-center">
+                                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M7 2a2 2 0 1 1 .001 4.001A2 2 0 0 1 7 2zm0 6a2 2 0 1 1 .001 4.001A2 2 0 0 1 7 8zm0 6a2 2 0 1 1 .001 4.001A2 2 0 0 1 7 14zm6-8a2 2 0 1 1-.001-4.001A2 2 0 0 1 13 6zm0 2a2 2 0 1 1 .001 4.001A2 2 0 0 1 13 8zm0 6a2 2 0 1 1 .001 4.001A2 2 0 0 1 13 14z"/>
+                                            </svg>
+                                        </div>
+                                        <input type="text" name="project_description_points[]" placeholder="Project achievement or feature..." class="flex-1 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500">
+                                        <button type="button" class="remove-bullet-point text-red-500 hover:text-red-700 px-2 py-2 text-sm font-medium" style="display: none;">×</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" id="addProject" class="text-purple-600 hover:text-purple-800 text-sm font-medium">+ Add Project</button>
+                </div>
+
+                <!-- Template Selection -->
+                <div class="space-y-4">
+                    <h3 class="text-lg font-semibold text-gray-700 border-b pb-2">Resume Template</h3>
+                    <select id="template" name="template" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500">
+                        <option value="modern">Modern</option>
+                        <option value="classic">Classic</option>
+                        <option value="minimal">Minimal</option>
+                    </select>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex gap-4 pt-4">
+                    <button type="button" id="previewBtn" class="flex-1 bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-4 rounded-md transition-colors">
+                        Refresh Preview
                     </button>
+                    <button type="button" id="downloadPdfBtn" class="flex-1 bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-4 rounded-md transition-colors">
+                        Download PDF
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Right Side - Preview -->
+        <section class="resume-preview-section lg:w-1/2 bg-gray-50 p-6 overflow-y-auto">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">Resume Preview</h2>
+            <div id="resumePreview" class="bg-white border border-gray-200 rounded-lg shadow-sm">
+                <div class="text-center text-gray-500 py-20">
+                    <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    <p class="mt-2 text-sm">Start typing in the form to see your resume preview update in real-time.</p>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- Footer -->
-    <footer class="py-6 text-center text-gray-400 text-xs bg-transparent">
-        &copy; <span id="currentYear"></span> Resume Maker. All rights reserved.
-    </footer>
-
+    <style>
+        /* A4 Preview Styles - Exact PDF dimensions with pagination support */
+        #resumePreview {
+            width: 210mm;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transform-origin: top left;
+            position: relative;
+            /* Remove height constraint and overflow hidden to allow pagination */
+        }
+        
+        /* Paginated container that automatically creates new pages */
+        .resume-paginated-container {
+            width: 210mm;
+            background: white;
+            padding: 0.5in;
+            box-sizing: border-box;
+            font-size: 11pt;
+            line-height: 1.4;
+            font-family: Arial, sans-serif;
+        }
+        
+        /* Single page container - only one page allowed */
+        .resume-page {
+            width: 210mm;
+            height: 297mm;
+            background: white;
+            margin-bottom: 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            max-height: 297mm;
+        }
+        
+        .resume-page-content {
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+            padding: 0.5in;
+            margin: 0;
+            overflow: hidden;
+        }
+        
+        /* Responsive scaling for smaller screens */
+        @media (max-width: 1200px) {
+            #resumePreview {
+                width: 100%;
+                max-width: 210mm;
+            }
+            
+            .resume-paginated-container {
+                width: 100%;
+                max-width: 210mm;
+                padding: 0.3in;
+            }
+            
+            .resume-page {
+                width: 100%;
+                max-width: 210mm;
+                height: 297mm;
+                max-height: 297mm;
+                overflow: hidden;
+            }
+            
+            .resume-page-content {
+                padding: 0.3in;
+                overflow: hidden;
+            }
+        }
+    </style>
+    
     <script>
-        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        // Save form data to localStorage
+        function saveFormData() {
+            const form = document.getElementById('resumeForm');
+            const formData = new FormData(form);
+            const data = {};
+            
+            // Collect all form data
+            for (let [key, value] of formData.entries()) {
+                if (key.endsWith('[]')) {
+                    const baseKey = key.slice(0, -2);
+                    if (!data[baseKey]) data[baseKey] = [];
+                    data[baseKey].push(value);
+                } else {
+                    data[key] = value;
+                }
+            }
+            
+            // Process bullet points for job descriptions properly
+            data.job_description = [];
+            const experienceItems = document.querySelectorAll('.experience-item');
+            
+            experienceItems.forEach((item, index) => {
+                const bulletPoints = item.querySelectorAll('input[name="job_description_points[]"]');
+                const points = [];
+                
+                bulletPoints.forEach(input => {
+                    if (input.value.trim()) {
+                        points.push(input.value.trim());
+                    }
+                });
+                
+                data.job_description.push(points);
+            });
+            
+            // Process bullet points for project descriptions
+            data.project_description = [];
+            const projectItems = document.querySelectorAll('.project-item');
+            
+            projectItems.forEach((item, index) => {
+                const bulletPoints = item.querySelectorAll('input[name="project_description_points[]"]');
+                const points = [];
+                
+                bulletPoints.forEach(input => {
+                    if (input.value.trim()) {
+                        points.push(input.value.trim());
+                    }
+                });
+                
+                data.project_description.push(points);
+            });
+            
+            // Save to localStorage
+            localStorage.setItem('resumeFormData', JSON.stringify(data));
+        }
+        
+        // Load form data from localStorage
+        function loadFormData() {
+            const savedData = localStorage.getItem('resumeFormData');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                const form = document.getElementById('resumeForm');
+                
+                // Fill in basic fields
+                Object.keys(data).forEach(key => {
+                    if (!key.endsWith('[]')) {
+                        const input = form.querySelector(`[name="${key}"]`);
+                        if (input) {
+                            input.value = data[key];
+                        }
+                    }
+                });
+                
+                // Fill in array fields (experience, education)
+                if (data.job_title && data.job_title.length > 0) {
+                    // Remove existing experience items except the first one
+                    const experienceContainer = document.getElementById('experienceContainer');
+                    while (experienceContainer.children.length > 1) {
+                        experienceContainer.removeChild(experienceContainer.lastChild);
+                    }
+                    
+                    // Add saved experience items
+                    for (let i = 0; i < data.job_title.length; i++) {
+                        if (i === 0) {
+                            // Fill first item
+                            const firstItem = experienceContainer.children[0];
+                            if (data.job_title[i]) firstItem.querySelector('[name="job_title[]"]').value = data.job_title[i];
+                            if (data.company && data.company[i]) firstItem.querySelector('[name="company[]"]').value = data.company[i];
+                            if (data.start_date && data.start_date[i]) firstItem.querySelector('[name="start_date[]"]').value = data.start_date[i];
+                            if (data.end_date && data.end_date[i]) firstItem.querySelector('[name="end_date[]"]').value = data.end_date[i];
+                            
+                            // Fill bullet points for first item
+                            if (data.job_description && data.job_description[i]) {
+                                const bulletPointsContainer = firstItem.querySelector('.job-description-points');
+                                bulletPointsContainer.innerHTML = '';
+                                
+                                data.job_description[i].forEach((point, pointIndex) => {
+                                    const bulletPoint = document.createElement('div');
+                                    bulletPoint.className = 'bullet-point-item flex gap-2';
+                                    bulletPoint.draggable = true;
+                                    bulletPoint.innerHTML = `
+                                        <div class="drag-handle cursor-move text-gray-400 hover:text-gray-600 px-2 py-2 flex items-center">
+                                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M7 2a2 2 0 1 1 .001 4.001A2 2 0 0 1 7 2zm0 6a2 2 0 1 1 .001 4.001A2 2 0 0 1 7 8zm0 6a2 2 0 1 1 .001 4.001A2 2 0 0 1 7 14zm6-8a2 2 0 1 1-.001-4.001A2 2 0 0 1 13 6zm0 2a2 2 0 1 1 .001 4.001A2 2 0 0 1 13 8zm0 6a2 2 0 1 1 .001 4.001A2 2 0 0 1 13 14z"/>
+                                            </svg>
+                                        </div>
+                                        <input type="text" name="job_description_points[]" value="${point}" placeholder="Bullet point..." class="flex-1 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500">
+                                        <button type="button" class="remove-bullet-point text-red-500 hover:text-red-700 px-2 py-2 text-sm font-medium" ${data.job_description[i].length > 1 ? '' : 'style="display: none;"'}>×</button>
+                                    `;
+                                    bulletPointsContainer.appendChild(bulletPoint);
+                                    attachDragAndDropListeners(bulletPoint, bulletPointsContainer);
+                                });
+                                
+                                // Reattach bullet point listeners
+                                attachBulletPointListeners(firstItem);
+                            }
+                        } else {
+                            // Add new items for additional experiences
+                            document.getElementById('addExperience').click();
+                            const newItem = experienceContainer.children[experienceContainer.children.length - 1];
+                            if (data.job_title[i]) newItem.querySelector('[name="job_title[]"]').value = data.job_title[i];
+                            if (data.company && data.company[i]) newItem.querySelector('[name="company[]"]').value = data.company[i];
+                            if (data.start_date && data.start_date[i]) newItem.querySelector('[name="start_date[]"]').value = data.start_date[i];
+                            if (data.end_date && data.end_date[i]) newItem.querySelector('[name="end_date[]"]').value = data.end_date[i];
+                            
+                            // Fill bullet points for additional items
+                            if (data.job_description && data.job_description[i]) {
+                                const bulletPointsContainer = newItem.querySelector('.job-description-points');
+                                bulletPointsContainer.innerHTML = '';
+                                
+                                data.job_description[i].forEach((point, pointIndex) => {
+                                    const bulletPoint = document.createElement('div');
+                                    bulletPoint.className = 'bullet-point-item flex gap-2';
+                                    bulletPoint.draggable = true;
+                                    bulletPoint.innerHTML = `
+                                        <div class="drag-handle cursor-move text-gray-400 hover:text-gray-600 px-2 py-2 flex items-center">
+                                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M7 2a2 2 0 1 1 .001 4.001A2 2 0 0 1 7 2zm0 6a2 2 0 1 1 .001 4.001A2 2 0 0 1 7 8zm0 6a2 2 0 1 1 .001 4.001A2 2 0 0 1 7 14zm6-8a2 2 0 1 1-.001-4.001A2 2 0 0 1 13 6zm0 2a2 2 0 1 1 .001 4.001A2 2 0 0 1 13 8zm0 6a2 2 0 1 1 .001 4.001A2 2 0 0 1 13 14z"/>
+                                            </svg>
+                                        </div>
+                                        <input type="text" name="job_description_points[]" value="${point}" placeholder="Bullet point..." class="flex-1 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500">
+                                        <button type="button" class="remove-bullet-point text-red-500 hover:text-red-700 px-2 py-2 text-sm font-medium" ${data.job_description[i].length > 1 ? '' : 'style="display: none;"'}>×</button>
+                                    `;
+                                    bulletPointsContainer.appendChild(bulletPoint);
+                                    attachDragAndDropListeners(bulletPoint, bulletPointsContainer);
+                                });
+                                
+                                // Reattach bullet point listeners
+                                attachBulletPointListeners(newItem);
+                            }
+                        }
+                    }
+                }
+                
+                // Fill in education
+                if (data.degree && data.degree.length > 0) {
+                    const educationContainer = document.getElementById('educationContainer');
+                    while (educationContainer.children.length > 1) {
+                        educationContainer.removeChild(educationContainer.lastChild);
+                    }
+                    
+                    for (let i = 0; i < data.degree.length; i++) {
+                        if (i === 0) {
+                            const firstItem = educationContainer.children[0];
+                            if (data.degree[i]) firstItem.querySelector('[name="degree[]"]').value = data.degree[i];
+                            if (data.program && data.program[i]) firstItem.querySelector('[name="program[]"]').value = data.program[i];
+                            if (data.institution && data.institution[i]) firstItem.querySelector('[name="institution[]"]').value = data.institution[i];
+                            if (data.education_location && data.education_location[i]) firstItem.querySelector('[name="education_location[]"]').value = data.education_location[i];
+                            if (data.start_date && data.start_date[i]) firstItem.querySelector('[name="start_date[]"]').value = data.start_date[i];
+                            if (data.end_date && data.end_date[i]) firstItem.querySelector('[name="end_date[]"]').value = data.end_date[i];
+                            if (data.gpa && data.gpa[i]) firstItem.querySelector('[name="gpa[]"]').value = data.gpa[i];
+                        } else {
+                            document.getElementById('addEducation').click();
+                            const newItem = educationContainer.children[educationContainer.children.length - 1];
+                            if (data.degree[i]) newItem.querySelector('[name="degree[]"]').value = data.degree[i];
+                            if (data.program && data.program[i]) newItem.querySelector('[name="program[]"]').value = data.program[i];
+                            if (data.institution && data.institution[i]) newItem.querySelector('[name="institution[]"]').value = data.institution[i];
+                            if (data.education_location && data.education_location[i]) newItem.querySelector('[name="education_location[]"]').value = data.education_location[i];
+                            if (data.start_date && data.start_date[i]) newItem.querySelector('[name="start_date[]"]').value = data.start_date[i];
+                            if (data.end_date && data.end_date[i]) newItem.querySelector('[name="end_date[]"]').value = data.end_date[i];
+                            if (data.gpa && data.gpa[i]) newItem.querySelector('[name="gpa[]"]').value = data.gpa[i];
+                        }
+                    }
+                }
+                
+                // Fill in projects
+                if (data.project_title && data.project_title.length > 0) {
+                    const projectContainer = document.getElementById('projectContainer');
+                    while (projectContainer.children.length > 1) {
+                        projectContainer.removeChild(projectContainer.lastChild);
+                    }
+                    
+                    for (let i = 0; i < data.project_title.length; i++) {
+                        if (i === 0) {
+                            const firstItem = projectContainer.children[0];
+                            if (data.project_title[i]) firstItem.querySelector('[name="project_title[]"]').value = data.project_title[i];
+                            if (data.project_role && data.project_role[i]) firstItem.querySelector('[name="project_role[]"]').value = data.project_role[i];
+                            if (data.project_location && data.project_location[i]) firstItem.querySelector('[name="project_location[]"]').value = data.project_location[i];
+                            if (data.project_start && data.project_start[i]) firstItem.querySelector('[name="project_start[]"]').value = data.project_start[i];
+                            if (data.project_end && data.project_end[i]) firstItem.querySelector('[name="project_end[]"]').value = data.project_end[i];
+                            
+                            // Fill bullet points for first project
+                            if (data.project_description && data.project_description[i]) {
+                                const bulletPointsContainer = firstItem.querySelector('.project-description-points');
+                                bulletPointsContainer.innerHTML = '';
+                                
+                                data.project_description[i].forEach((point, pointIndex) => {
+                                    const bulletPoint = document.createElement('div');
+                                    bulletPoint.className = 'bullet-point-item flex gap-2';
+                                    bulletPoint.draggable = true;
+                                    bulletPoint.innerHTML = `
+                                        <div class="drag-handle cursor-move text-gray-400 hover:text-gray-600 px-2 py-2 flex items-center">
+                                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M7 2a2 2 0 1 1 .001 4.001A2 2 0 0 1 7 2zm0 6a2 2 0 1 1 .001 4.001A2 2 0 0 1 7 8zm0 6a2 2 0 1 1 .001 4.001A2 2 0 0 1 7 14zm6-8a2 2 0 1 1-.001-4.001A2 2 0 0 1 13 6zm0 2a2 2 0 1 1 .001 4.001A2 2 0 0 1 13 8zm0 6a2 2 0 1 1 .001 4.001A2 2 0 0 1 13 14z"/>
+                                            </svg>
+                                        </div>
+                                        <input type="text" name="project_description_points[]" value="${point}" placeholder="Project achievement or feature..." class="flex-1 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500">
+                                        <button type="button" class="remove-bullet-point text-red-500 hover:text-red-700 px-2 py-2 text-sm font-medium" ${data.project_description[i].length > 1 ? '' : 'style="display: none;"'}>×</button>
+                                    `;
+                                    bulletPointsContainer.appendChild(bulletPoint);
+                                    attachDragAndDropListeners(bulletPoint, bulletPointsContainer);
+                                });
+                                
+                                // Reattach bullet point listeners
+                                attachProjectBulletPointListeners(firstItem);
+                            }
+                        } else {
+                            // Add new items for additional projects
+                            document.getElementById('addProject').click();
+                            const newItem = projectContainer.children[projectContainer.children.length - 1];
+                            if (data.project_title[i]) newItem.querySelector('[name="project_title[]"]').value = data.project_title[i];
+                            if (data.project_role && data.project_role[i]) newItem.querySelector('[name="project_role[]"]').value = data.project_role[i];
+                            if (data.project_location && data.project_location[i]) newItem.querySelector('[name="project_location[]"]').value = data.project_location[i];
+                            if (data.project_start && data.project_start[i]) newItem.querySelector('[name="project_start[]"]').value = data.project_start[i];
+                            if (data.project_end && data.project_end[i]) newItem.querySelector('[name="project_end[]"]').value = data.project_end[i];
+                            
+                            // Fill bullet points for additional projects
+                            if (data.project_description && data.project_description[i]) {
+                                const bulletPointsContainer = newItem.querySelector('.project-description-points');
+                                bulletPointsContainer.innerHTML = '';
+                                
+                                data.project_description[i].forEach((point, pointIndex) => {
+                                    const bulletPoint = document.createElement('div');
+                                    bulletPoint.className = 'bullet-point-item flex gap-2';
+                                    bulletPoint.draggable = true;
+                                    bulletPoint.innerHTML = `
+                                        <div class="drag-handle cursor-move text-gray-400 hover:text-gray-600 px-2 py-2 flex items-center">
+                                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M7 2a2 2 0 1 1 .001 4.001A2 2 0 0 1 7 2zm0 6a2 2 0 1 1 .001 4.001A2 2 0 0 1 7 8zm0 6a2 2 0 1 1 .001 4.001A2 2 0 0 1 7 14zm6-8a2 2 0 1 1-.001-4.001A2 2 0 0 1 13 6zm0 2a2 2 0 1 1 .001 4.001A2 2 0 0 1 13 8zm0 6a2 2 0 1 1 .001 4.001A2 2 0 0 1 13 14z"/>
+                                            </svg>
+                                        </div>
+                                        <input type="text" name="project_description_points[]" value="${point}" placeholder="Project achievement or feature..." class="flex-1 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500">
+                                        <button type="button" class="remove-bullet-point text-red-500 hover:text-red-700 px-2 py-2 text-sm font-medium" ${data.project_description[i].length > 1 ? '' : 'style="display: none;"'}>×</button>
+                                    `;
+                                    bulletPointsContainer.appendChild(bulletPoint);
+                                    attachDragAndDropListeners(bulletPoint, bulletPointsContainer);
+                                });
+                                
+                                // Reattach bullet point listeners
+                                attachProjectBulletPointListeners(newItem);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        // Auto-save form data when user types
+        function setupAutoSave() {
+            const form = document.getElementById('resumeForm');
+            form.addEventListener('input', saveFormData);
+            form.addEventListener('change', saveFormData);
+        }
+        
+        // Real-time preview functionality
+        let previewTimeout;
+        function setupRealTimePreview() {
+            const form = document.getElementById('resumeForm');
+            
+            // Add event listeners for all form inputs
+            form.addEventListener('input', function() {
+                // Clear existing timeout
+                clearTimeout(previewTimeout);
+                
+                // Set a new timeout to update preview after user stops typing
+                previewTimeout = setTimeout(() => {
+                    updateResumePreview();
+                }, 500); // 500ms delay
+            });
+            
+            form.addEventListener('change', function() {
+                // Update immediately on change events (dropdowns, checkboxes, etc.)
+                clearTimeout(previewTimeout);
+                updateResumePreview();
+            });
+        }
+        
+        // Update resume preview with current form data
+        async function updateResumePreview() {
+            const formData = new FormData(document.getElementById('resumeForm'));
+            const data = {};
+            
+            // Collect form data
+            for (let [key, value] of formData.entries()) {
+                if (key.endsWith('[]')) {
+                    const baseKey = key.slice(0, -2);
+                    if (!data[baseKey]) data[baseKey] = [];
+                    data[baseKey].push(value);
+                } else {
+                    data[key] = value;
+                }
+            }
+            
+            // Process bullet points for job descriptions
+            data.job_description = [];
+            const experienceItems = document.querySelectorAll('.experience-item');
+            
+            experienceItems.forEach((item, index) => {
+                const bulletPoints = item.querySelectorAll('input[name="job_description_points[]"]');
+                const points = [];
+                
+                bulletPoints.forEach(input => {
+                    if (input.value.trim()) {
+                        points.push(input.value.trim());
+                    }
+                });
+                
+                if (points.length > 0) {
+                    data.job_description.push(points);
+                } else {
+                    // Add empty array for experience items without bullet points
+                    data.job_description.push([]);
+                }
+            });
+            
+            // Process bullet points for project descriptions
+            data.project_description = [];
+            const projectItems = document.querySelectorAll('.project-item');
+            
+            projectItems.forEach((item, index) => {
+                const bulletPoints = item.querySelectorAll('input[name="project_description_points[]"]');
+                const points = [];
+                
+                bulletPoints.forEach(input => {
+                    if (input.value.trim()) {
+                        points.push(input.value.trim());
+                    }
+                });
+                
+                if (points.length > 0) {
+                    data.project_description.push(points);
+                } else {
+                    // Add empty array for project items without bullet points
+                    data.project_description.push([]);
+                }
+            });
+            
+            // Debug logging
+            console.log('Experience items found:', experienceItems.length);
+            console.log('Project items found:', projectItems.length);
+            console.log('Job description data:', data.job_description);
+            console.log('Project description data:', data.project_description);
+            
+            // Add template
+            data.template = document.getElementById('template').value;
+            
+            try {
+                const response = await fetch('/generate-resume', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok && result.resume_html) {
+                    // Apply pagination to the resume content
+                    const paginatedHtml = applyPagination(result.resume_html);
+                    document.getElementById('resumePreview').innerHTML = paginatedHtml;
+                    // Store the HTML for download
+                    window.currentResumeHtml = result.resume_html;
+                } else {
+                    console.error('Failed to update preview:', result.error);
+                }
+            } catch (err) {
+                console.error('Failed to update preview:', err);
+            }
+        }
+        
+        // Function to apply single page constraint to resume content
+        function applyPagination(resumeHtml) {
+            // Always return only one page with overflow hidden
+            return `<div class="resume-page" style="overflow: hidden;"><div class="resume-page-content">${resumeHtml}</div></div>`;
+        }
+        
+        // Add Experience
+        document.getElementById('addExperience').addEventListener('click', function() {
+            const container = document.getElementById('experienceContainer');
+            const newItem = container.children[0].cloneNode(true);
+            
+            // Clear the values
+            newItem.querySelectorAll('input, textarea').forEach(input => input.value = '');
+            
+            // Reset bullet points to just one
+            const bulletPointsContainer = newItem.querySelector('.job-description-points');
+            bulletPointsContainer.innerHTML = `
+                <div class="bullet-point-item flex gap-2" draggable="true">
+                    <div class="drag-handle cursor-move text-gray-400 hover:text-gray-600 px-2 py-2 flex items-center">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M7 2a2 2 0 1 1 .001 4.001A2 2 0 0 1 7 2zm0 6a2 2 0 1 1 .001 4.001A2 2 0 0 1 7 8zm0 6a2 2 0 1 1 .001 4.001A2 2 0 0 1 7 14zm6-8a2 2 0 1 1-.001-4.001A2 2 0 0 1 13 6zm0 2a2 2 0 1 1 .001 4.001A2 2 0 0 1 13 8zm0 6a2 2 0 1 1 .001 4.001A2 2 0 0 1 13 14z"/>
+                        </svg>
+                    </div>
+                    <input type="text" name="job_description_points[]" placeholder="Bullet point..." class="flex-1 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500">
+                    <button type="button" class="remove-bullet-point text-red-500 hover:text-red-700 px-2 py-2 text-sm font-medium" style="display: none;">×</button>
+                </div>
+            `;
+            
+            // Reattach event listeners
+            attachBulletPointListeners(newItem);
+            
+            // Attach drag and drop to the new bullet point
+            const newBulletPoint = bulletPointsContainer.querySelector('.bullet-point-item');
+            attachDragAndDropListeners(newBulletPoint, bulletPointsContainer);
+            
+            container.appendChild(newItem);
+            
+            // Trigger real-time preview update
+            clearTimeout(previewTimeout);
+            previewTimeout = setTimeout(() => {
+                updateResumePreview();
+            }, 500);
+        });
+
+        // Add bullet point functionality
+        function attachBulletPointListeners(container) {
+            // Add bullet point
+            container.querySelector('.add-bullet-point').addEventListener('click', function() {
+                const bulletPointsContainer = container.querySelector('.job-description-points');
+                const newBulletPoint = document.createElement('div');
+                newBulletPoint.className = 'bullet-point-item flex gap-2';
+                newBulletPoint.draggable = true;
+                newBulletPoint.innerHTML = `
+                    <div class="drag-handle cursor-move text-gray-400 hover:text-gray-600 px-2 py-2 flex items-center">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M7 2a2 2 0 1 1 .001 4.001A2 2 0 0 1 7 2zm0 6a2 2 0 1 1 .001 4.001A2 2 0 0 1 7 8zm0 6a2 2 0 1 1 .001 4.001A2 2 0 0 1 7 14zm6-8a2 2 0 1 1-.001-4.001A2 2 0 0 1 13 6zm0 2a2 2 0 1 1 .001 4.001A2 2 0 0 1 13 8zm0 6a2 2 0 1 1 .001 4.001A2 2 0 0 1 13 14z"/>
+                        </svg>
+                    </div>
+                    <input type="text" name="job_description_points[]" placeholder="Bullet point..." class="flex-1 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500">
+                    <button type="button" class="remove-bullet-point text-red-500 hover:text-red-700 px-2 py-2 text-sm font-medium">×</button>
+                `;
+                bulletPointsContainer.appendChild(newBulletPoint);
+                
+                // Attach drag and drop listeners to new bullet point
+                attachDragAndDropListeners(newBulletPoint, bulletPointsContainer);
+                
+                // Show remove buttons if more than one bullet point
+                const bulletPoints = bulletPointsContainer.querySelectorAll('.bullet-point-item');
+                bulletPoints.forEach((item, index) => {
+                    const removeBtn = item.querySelector('.remove-bullet-point');
+                    if (bulletPoints.length > 1) {
+                        removeBtn.style.display = 'block';
+                    } else {
+                        removeBtn.style.display = 'none';
+                    }
+                });
+                
+                // Save data after adding bullet point
+                saveFormData();
+                
+                // Trigger real-time preview update
+                clearTimeout(previewTimeout);
+                previewTimeout = setTimeout(() => {
+                    updateResumePreview();
+                }, 500);
+            });
+
+            // Remove bullet point
+            container.addEventListener('click', function(e) {
+                if (e.target.classList.contains('remove-bullet-point')) {
+                    const bulletPointItem = e.target.closest('.bullet-point-item');
+                    const bulletPointsContainer = bulletPointItem.parentElement;
+                    bulletPointItem.remove();
+                    
+                    // Hide remove button if only one bullet point remains
+                    const remainingBulletPoints = bulletPointsContainer.querySelectorAll('.bullet-point-item');
+                    remainingBulletPoints.forEach((item, index) => {
+                        const removeBtn = item.querySelector('.remove-bullet-point');
+                        if (remainingBulletPoints.length > 1) {
+                            removeBtn.style.display = 'block';
+                        } else {
+                            removeBtn.style.display = 'none';
+                        }
+                    });
+                    
+                    // Save data after removing bullet point
+                    saveFormData();
+                    
+                    // Trigger real-time preview update
+                    clearTimeout(previewTimeout);
+                    previewTimeout = setTimeout(() => {
+                        updateResumePreview();
+                    }, 500);
+                }
+            });
+        }
+
+        // Drag and drop functionality for bullet points
+        function attachDragAndDropListeners(bulletPoint, container) {
+            bulletPoint.addEventListener('dragstart', function(e) {
+                e.dataTransfer.setData('text/plain', '');
+                this.classList.add('opacity-50');
+            });
+            
+            bulletPoint.addEventListener('dragend', function(e) {
+                this.classList.remove('opacity-50');
+            });
+            
+            bulletPoint.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                const draggingElement = container.querySelector('.opacity-50');
+                if (draggingElement && draggingElement !== this) {
+                    const rect = this.getBoundingClientRect();
+                    const midY = rect.top + rect.height / 2;
+                    
+                    if (e.clientY < midY) {
+                        this.style.borderTop = '2px solid #8b5cf6';
+                        this.style.borderBottom = '';
+                    } else {
+                        this.style.borderTop = '';
+                        this.style.borderBottom = '2px solid #8b5cf6';
+                    }
+                }
+            });
+            
+            bulletPoint.addEventListener('dragleave', function(e) {
+                this.style.borderTop = '';
+                this.style.borderBottom = '';
+            });
+            
+            bulletPoint.addEventListener('drop', function(e) {
+                e.preventDefault();
+                this.style.borderTop = '';
+                this.style.borderBottom = '';
+                
+                const draggingElement = container.querySelector('.opacity-50');
+                if (draggingElement && draggingElement !== this) {
+                    const rect = this.getBoundingClientRect();
+                    const midY = rect.top + rect.height / 2;
+                    
+                    if (e.clientY < midY) {
+                        container.insertBefore(draggingElement, this);
+                    } else {
+                        container.insertBefore(draggingElement, this.nextSibling);
+                    }
+                    
+                    // Save data after reordering
+                    saveFormData();
+                    
+                    // Trigger real-time preview update
+                    clearTimeout(previewTimeout);
+                    previewTimeout = setTimeout(() => {
+                        updateResumePreview();
+                    }, 500);
+                }
+            });
+        }
+        
+        // Initialize bullet point listeners for the first experience item
+        attachBulletPointListeners(document.querySelector('.experience-item'));
+        
+        // Attach drag and drop to existing bullet points
+        document.querySelectorAll('.bullet-point-item').forEach(item => {
+            const container = item.closest('.job-description-points');
+            if (container) {
+                attachDragAndDropListeners(item, container);
+            }
+        });
+        
+        // Load saved data and setup auto-save
+        loadFormData();
+        setupAutoSave();
+        setupRealTimePreview();
+
+        // Add Education
+        document.getElementById('addEducation').addEventListener('click', function() {
+            const container = document.getElementById('educationContainer');
+            const newItem = container.children[0].cloneNode(true);
+            
+            // Clear the values
+            newItem.querySelectorAll('input').forEach(input => input.value = '');
+            container.appendChild(newItem);
+            
+            // Trigger real-time preview update
+            clearTimeout(previewTimeout);
+            previewTimeout = setTimeout(() => {
+                updateResumePreview();
+            }, 500);
+        });
+
+        // Add Project
+        document.getElementById('addProject').addEventListener('click', function() {
+            const container = document.getElementById('projectContainer');
+            const newItem = container.children[0].cloneNode(true);
+            
+            // Clear the values
+            newItem.querySelectorAll('input').forEach(input => input.value = '');
+            
+            // Reset bullet points to just one
+            const bulletPointsContainer = newItem.querySelector('.project-description-points');
+            bulletPointsContainer.innerHTML = `
+                <div class="bullet-point-item flex gap-2" draggable="true">
+                    <div class="drag-handle cursor-move text-gray-400 hover:text-gray-600 px-2 py-2 flex items-center">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M7 2a2 2 0 1 1 .001 4.001A2 2 0 0 1 7 2zm0 6a2 2 0 1 1 .001 4.001A2 2 0 0 1 7 8zm0 6a2 2 0 1 1 .001 4.001A2 2 0 0 1 7 14zm6-8a2 2 0 1 1-.001-4.001A2 2 0 0 1 13 6zm0 2a2 2 0 1 1 .001 4.001A2 2 0 0 1 13 8zm0 6a2 2 0 1 1 .001 4.001A2 2 0 0 1 13 14z"/>
+                        </svg>
+                    </div>
+                    <input type="text" name="project_description_points[]" placeholder="Project achievement or feature..." class="flex-1 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500">
+                    <button type="button" class="remove-bullet-point text-red-500 hover:text-red-700 px-2 py-2 text-sm font-medium" style="display: none;">×</button>
+                </div>
+            `;
+            
+            // Reattach event listeners
+            attachProjectBulletPointListeners(newItem);
+            
+            // Attach drag and drop to the new bullet point
+            const newBulletPoint = bulletPointsContainer.querySelector('.bullet-point-item');
+            attachDragAndDropListeners(newBulletPoint, bulletPointsContainer);
+            
+            container.appendChild(newItem);
+            
+            // Trigger real-time preview update
+            clearTimeout(previewTimeout);
+            previewTimeout = setTimeout(() => {
+                updateResumePreview();
+            }, 500);
+        });
+
+        // Project bullet point functionality
+        function attachProjectBulletPointListeners(container) {
+            // Add bullet point
+            container.querySelector('.add-project-bullet-point').addEventListener('click', function() {
+                const bulletPointsContainer = container.querySelector('.project-description-points');
+                const newBulletPoint = document.createElement('div');
+                newBulletPoint.className = 'bullet-point-item flex gap-2';
+                newBulletPoint.draggable = true;
+                newBulletPoint.innerHTML = `
+                    <div class="drag-handle cursor-move text-gray-400 hover:text-gray-600 px-2 py-2 flex items-center">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M7 2a2 2 0 1 1 .001 4.001A2 2 0 0 1 7 2zm0 6a2 2 0 1 1 .001 4.001A2 2 0 0 1 7 8zm0 6a2 2 0 1 1 .001 4.001A2 2 0 0 1 7 14zm6-8a2 2 0 1 1-.001-4.001A2 2 0 0 1 13 6zm0 2a2 2 0 1 1 .001 4.001A2 2 0 0 1 13 8zm0 6a2 2 0 1 1 .001 4.001A2 2 0 0 1 13 14z"/>
+                        </svg>
+                    </div>
+                    <input type="text" name="project_description_points[]" placeholder="Project achievement or feature..." class="flex-1 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500">
+                    <button type="button" class="remove-bullet-point text-red-500 hover:text-red-700 px-2 py-2 text-sm font-medium">×</button>
+                `;
+                bulletPointsContainer.appendChild(newBulletPoint);
+                
+                // Attach drag and drop listeners to new bullet point
+                attachDragAndDropListeners(newBulletPoint, bulletPointsContainer);
+                
+                // Show remove buttons if more than one bullet point
+                const bulletPoints = bulletPointsContainer.querySelectorAll('.bullet-point-item');
+                bulletPoints.forEach((item, index) => {
+                    const removeBtn = item.querySelector('.remove-bullet-point');
+                    if (bulletPoints.length > 1) {
+                        removeBtn.style.display = 'block';
+                    } else {
+                        removeBtn.style.display = 'none';
+                    }
+                });
+                
+                // Save data after adding bullet point
+                saveFormData();
+                
+                // Trigger real-time preview update
+                clearTimeout(previewTimeout);
+                previewTimeout = setTimeout(() => {
+                    updateResumePreview();
+                }, 500);
+            });
+
+            // Remove bullet point
+            container.addEventListener('click', function(e) {
+                if (e.target.classList.contains('remove-bullet-point')) {
+                    const bulletPointItem = e.target.closest('.bullet-point-item');
+                    const bulletPointsContainer = bulletPointItem.parentElement;
+                    bulletPointItem.remove();
+                    
+                    // Hide remove button if only one bullet point remains
+                    const remainingBulletPoints = bulletPointsContainer.querySelectorAll('.bullet-point-item');
+                    remainingBulletPoints.forEach((item, index) => {
+                        const removeBtn = item.querySelector('.remove-bullet-point');
+                        if (remainingBulletPoints.length > 1) {
+                            removeBtn.style.display = 'block';
+                        } else {
+                            removeBtn.style.display = 'none';
+                        }
+                    });
+                    
+                    // Save data after removing bullet point
+                    saveFormData();
+                    
+                    // Trigger real-time preview update
+                    clearTimeout(previewTimeout);
+                    previewTimeout = setTimeout(() => {
+                        updateResumePreview();
+                    }, 500);
+                }
+            });
+        }
+
+        // Initialize project bullet point listeners for the first project item
+        attachProjectBulletPointListeners(document.querySelector('.project-item'));
+
+        // Refresh Preview Button
+        document.getElementById('previewBtn').addEventListener('click', async function() {
+            const button = this;
+            const originalText = button.textContent;
+            
+            // Show loading state
+            button.disabled = true;
+            button.innerHTML = `
+                <span class="flex items-center gap-2 justify-center">
+                    <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+                    </svg>
+                    Updating...
+                </span>
+            `;
+            
+            try {
+                await updateResumePreview();
+            } catch (err) {
+                console.error('Failed to refresh preview:', err);
+            } finally {
+                // Reset button
+                button.disabled = false;
+                button.textContent = originalText;
+            }
+        });
+
+        // Download PDF Button
+        document.getElementById('downloadPdfBtn').addEventListener('click', async function() {
+            const button = this;
+            const originalText = button.textContent;
+            
+            // Show loading state
+            button.disabled = true;
+            button.innerHTML = `
+                <span class="flex items-center gap-2 justify-center">
+                    <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+                    </svg>
+                    Generating PDF...
+                </span>
+            `;
+            
+            try {
+                // Get current form data
+                const formData = new FormData(document.getElementById('resumeForm'));
+                const data = {};
+                
+                // Collect form data
+                for (let [key, value] of formData.entries()) {
+                    if (key.endsWith('[]')) {
+                        const baseKey = key.slice(0, -2);
+                        if (!data[baseKey]) data[baseKey] = [];
+                        data[baseKey].push(value);
+                    } else {
+                        data[key] = value;
+                    }
+                }
+                
+                // Process bullet points for job descriptions
+                data.job_description = [];
+                const experienceItems = document.querySelectorAll('.experience-item');
+                
+                experienceItems.forEach((item, index) => {
+                    const bulletPoints = item.querySelectorAll('input[name="job_description_points[]"]');
+                    const points = [];
+                    
+                    bulletPoints.forEach(input => {
+                        if (input.value.trim()) {
+                            points.push(input.value.trim());
+                        }
+                    });
+                    
+                    if (points.length > 0) {
+                        data.job_description.push(points);
+                    } else {
+                        data.job_description.push([]);
+                    }
+                });
+                
+                // Process bullet points for project descriptions
+                data.project_description = [];
+                const projectItems = document.querySelectorAll('.project-item');
+                
+                projectItems.forEach((item, index) => {
+                    const bulletPoints = item.querySelectorAll('input[name="project_description_points[]"]');
+                    const points = [];
+                    
+                    bulletPoints.forEach(input => {
+                        if (input.value.trim()) {
+                            points.push(input.value.trim());
+                        }
+                    });
+                    
+                    if (points.length > 0) {
+                        data.project_description.push(points);
+                    } else {
+                        data.project_description.push([]);
+                    }
+                });
+                
+                // Add template
+                data.template = document.getElementById('template').value;
+                
+                // Validate required fields
+                const requiredFields = ['name', 'email', 'phone', 'summary'];
+                for (const field of requiredFields) {
+                    if (!data[field]) {
+                        alert(`Please fill in the ${field} field before generating PDF.`);
+                        return;
+                    }
+                }
+                
+                // Generate and download PDF
+                const response = await fetch('/generate-pdf', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                if (response.ok) {
+                    // Create a blob from the PDF data
+                    const blob = await response.blob();
+                    
+                    // Create download link
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `${data.name.replace(' ', '_')}_Resume.pdf`;
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                    document.body.removeChild(a);
+                } else {
+                    const errorData = await response.json();
+                    alert(`Failed to generate PDF: ${errorData.error}`);
+                }
+            } catch (err) {
+                console.error('Failed to generate PDF:', err);
+                alert('Failed to generate PDF. Please try again.');
+            } finally {
+                // Reset button
+                button.disabled = false;
+                button.textContent = originalText;
+            }
+        });
+
+        // AI Rewrite functionality
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('ai-rewrite-btn')) {
+                const experienceItem = e.target.closest('.experience-item');
+                const bulletPointsContainer = experienceItem.querySelector('.job-description-points');
+                const bulletPoints = bulletPointsContainer.querySelectorAll('input[name="job_description_points[]"]');
+                
+                // Collect current bullet points
+                const currentPoints = [];
+                bulletPoints.forEach(input => {
+                    if (input.value.trim()) {
+                        currentPoints.push(input.value.trim());
+                    }
+                });
+                
+                if (currentPoints.length === 0) {
+                    alert('Please add some bullet points before using AI rewrite.');
+                    return;
+                }
+                
+                // Show loading state
+                const originalText = e.target.textContent;
+                e.target.disabled = true;
+                e.target.innerHTML = `
+                    <span class="flex items-center gap-1">
+                        <svg class="animate-spin h-3 w-3 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+                        </svg>
+                        Rewriting...
+                    </span>
+                `;
+                
+                // Call AI rewrite API
+                rewriteJobDescription(currentPoints, bulletPointsContainer, e.target, originalText);
+            }
+            
+            if (e.target.classList.contains('ai-rewrite-project-btn')) {
+                const projectItem = e.target.closest('.project-item');
+                const bulletPointsContainer = projectItem.querySelector('.project-description-points');
+                const bulletPoints = bulletPointsContainer.querySelectorAll('input[name="project_description_points[]"]');
+                
+                // Collect current bullet points
+                const currentPoints = [];
+                bulletPoints.forEach(input => {
+                    if (input.value.trim()) {
+                        currentPoints.push(input.value.trim());
+                    }
+                });
+                
+                if (currentPoints.length === 0) {
+                    alert('Please add some bullet points before using AI rewrite.');
+                    return;
+                }
+                
+                // Show loading state
+                const originalText = e.target.textContent;
+                e.target.disabled = true;
+                e.target.innerHTML = `
+                    <span class="flex items-center gap-1">
+                        <svg class="animate-spin h-3 w-3 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+                        </svg>
+                        Rewriting...
+                    </span>
+                `;
+                
+                // Call AI rewrite API for projects
+                rewriteProjectDescription(currentPoints, bulletPointsContainer, e.target, originalText);
+            }
+        });
+
+        async function rewriteJobDescription(currentPoints, bulletPointsContainer, button, originalText) {
+            try {
+                const response = await fetch('/ai-rewrite-job-description', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        bullet_points: currentPoints
+                    })
+                });
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    const rewrittenPoints = result.rewritten_points;
+                    
+                    // Clear existing bullet points
+                    bulletPointsContainer.innerHTML = '';
+                    
+                    // Add rewritten bullet points
+                    rewrittenPoints.forEach((point, index) => {
+                        const bulletPointItem = document.createElement('div');
+                        bulletPointItem.className = 'bullet-point-item flex gap-2';
+                        bulletPointItem.draggable = true;
+                        
+                        bulletPointItem.innerHTML = `
+                            <div class="drag-handle cursor-move text-gray-400 hover:text-gray-600 px-2 py-2 flex items-center">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M7 2a2 2 0 1 1 .001 4.001A2 2 0 0 1 7 2zm0 6a2 2 0 1 1 .001 4.001A2 2 0 0 1 7 8zm0 6a2 2 0 1 1 .001 4.001A2 2 0 0 1 7 14zm6-8a2 2 0 1 1-.001-4.001A2 2 0 0 1 13 6zm0 2a2 2 0 1 1 .001 4.001A2 2 0 0 1 13 8zm0 6a2 2 0 1 1 .001 4.001A2 2 0 0 1 13 14z"/>
+                                </svg>
+                            </div>
+                            <input type="text" name="job_description_points[]" value="${point}" placeholder="Bullet point..." class="flex-1 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500">
+                            <button type="button" class="remove-bullet-point text-red-500 hover:text-red-700 px-2 py-2 text-sm font-medium" ${rewrittenPoints.length > 1 ? '' : 'style="display: none;"'}>×</button>
+                        `;
+                        
+                        bulletPointsContainer.appendChild(bulletPointItem);
+                    });
+                    
+                    // Re-attach event listeners for the new bullet points
+                    attachBulletPointListeners(bulletPointsContainer.closest('.experience-item'));
+                    
+                    // Save data and update preview
+                    saveFormData();
+                    clearTimeout(previewTimeout);
+                    previewTimeout = setTimeout(() => {
+                        updateResumePreview();
+                    }, 500);
+                    
+                    // Show success message
+                    showNotification('Job description rewritten successfully!', 'success');
+                } else {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || 'Failed to rewrite job description');
+                }
+            } catch (error) {
+                console.error('AI rewrite error:', error);
+                showNotification('Failed to rewrite job description. Please try again.', 'error');
+            } finally {
+                // Reset button
+                button.disabled = false;
+                button.textContent = originalText;
+            }
+        }
+
+        async function rewriteProjectDescription(currentPoints, bulletPointsContainer, button, originalText) {
+            try {
+                const response = await fetch('/ai-rewrite-project-description', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        bullet_points: currentPoints
+                    })
+                });
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    const rewrittenPoints = result.rewritten_points;
+                    
+                    // Clear existing bullet points
+                    bulletPointsContainer.innerHTML = '';
+                    
+                    // Add rewritten bullet points
+                    rewrittenPoints.forEach((point, index) => {
+                        const bulletPointItem = document.createElement('div');
+                        bulletPointItem.className = 'bullet-point-item flex gap-2';
+                        bulletPointItem.draggable = true;
+                        
+                        bulletPointItem.innerHTML = `
+                            <div class="drag-handle cursor-move text-gray-400 hover:text-gray-600 px-2 py-2 flex items-center">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M7 2a2 2 0 1 1 .001 4.001A2 2 0 0 1 7 2zm0 6a2 2 0 1 1 .001 4.001A2 2 0 0 1 7 8zm0 6a2 2 0 1 1 .001 4.001A2 2 0 0 1 7 14zm6-8a2 2 0 1 1-.001-4.001A2 2 0 0 1 13 6zm0 2a2 2 0 1 1 .001 4.001A2 2 0 0 1 13 8zm0 6a2 2 0 1 1 .001 4.001A2 2 0 0 1 13 14z"/>
+                                </svg>
+                            </div>
+                            <input type="text" name="project_description_points[]" value="${point}" placeholder="Project achievement or feature..." class="flex-1 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500">
+                            <button type="button" class="remove-bullet-point text-red-500 hover:text-red-700 px-2 py-2 text-sm font-medium" ${rewrittenPoints.length > 1 ? '' : 'style="display: none;"'}>×</button>
+                        `;
+                        
+                        bulletPointsContainer.appendChild(bulletPointItem);
+                    });
+                    
+                    // Re-attach event listeners for the new bullet points
+                    attachProjectBulletPointListeners(bulletPointsContainer.closest('.project-item'));
+                    
+                    // Save data and update preview
+                    saveFormData();
+                    clearTimeout(previewTimeout);
+                    previewTimeout = setTimeout(() => {
+                        updateResumePreview();
+                    }, 500);
+                    
+                    // Show success message
+                    showNotification('Project description rewritten successfully!', 'success');
+                } else {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || 'Failed to rewrite project description');
+                }
+            } catch (error) {
+                console.error('AI rewrite error:', error);
+                showNotification('Failed to rewrite project description. Please try again.', 'error');
+            } finally {
+                // Reset button
+                button.disabled = false;
+                button.textContent = originalText;
+            }
+        }
+
+        function showNotification(message, type = 'info') {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 z-50 px-4 py-2 rounded-md text-white text-sm font-medium transition-all duration-300 transform translate-x-full`;
+            
+            if (type === 'success') {
+                notification.classList.add('bg-green-600');
+            } else if (type === 'error') {
+                notification.classList.add('bg-red-600');
+            } else {
+                notification.classList.add('bg-blue-600');
+            }
+            
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            // Animate in
+            setTimeout(() => {
+                notification.classList.remove('translate-x-full');
+            }, 100);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                notification.classList.add('translate-x-full');
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
     </script>
 </body>
 </html> 
