@@ -33,9 +33,9 @@ def extract_keywords():
         )
         
         response = openai.chat.completions.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4",
             messages=[{"role": "user", "content": prompt}],
-            max_tokens=128,
+            max_tokens=256,
             temperature=0.2,
         )
         
@@ -134,6 +134,13 @@ def ai_rewrite_job_description():
         bullet_points = data.get('bullet_points', [])
         selected_keywords = data.get('selected_keywords', [])
         
+        # Debug: Print what we received
+        print("=== AI REWRITE REQUEST DEBUG ===")
+        print(f"Received data: {data}")
+        print(f"Bullet points: {bullet_points}")
+        print(f"Selected keywords: {selected_keywords}")
+        print("================================")
+        
         if not bullet_points:
             return jsonify({'error': 'No bullet points provided'}), 400
         
@@ -141,17 +148,27 @@ def ai_rewrite_job_description():
         keyword_instruction = ""
         if selected_keywords:
             keyword_instruction = f"""
-IMPORTANT: You must naturally incorporate these keywords into the rewritten bullet points: {', '.join(selected_keywords)}
+                                        CRITICAL REQUIREMENT: You MUST include these keywords in your rewritten bullet points: {', '.join(selected_keywords)}
 
-Guidelines for keyword integration:
-- Use the keywords naturally within the context of each bullet point
-- Don't force keywords if they don't fit naturally
-- Maintain professional tone while including keywords
-- Ensure keywords flow naturally with the sentence structure
-- Prioritize readability and impact over keyword stuffing
-"""
+                                        MANDATORY INSTRUCTIONS:
+                                        - Each bullet point MUST contain at least one of these keywords
+                                        - Use the keywords naturally within the sentence structure
+                                        - If a keyword doesn't fit naturally, rephrase the bullet point to include it
+                                        - Make sure all keywords are used across the bullet points
+                                        - Prioritize keyword inclusion over perfect flow if necessary
+
+                                        EXAMPLE: If keywords are ["Git", "SQL"], rewrite like:
+                                        "Implemented Git version control and SQL database optimization, resulting in..."
+
+                                        Original Bullet Points:
+                                        {chr(10).join([f"{i+1}. {point}" for i, point in enumerate(bullet_points)])}
+
+                                        Now rewrite all {len(bullet_points)} bullet points using the given instructions.
+                                        """
         
         prompt = f"""You are a professional resume writer. Rewrite the following job description bullet points to make them more impactful, professional, and human-like. 
+
+{keyword_instruction}
 
 Guidelines:
 - Use strong action verbs at the beginning of each bullet point
@@ -160,7 +177,7 @@ Guidelines:
 - Keep each point concise but impactful
 - Focus on results and accomplishments
 - Use industry-standard terminology
-- Make them sound like they were written by a human professional{keyword_instruction}
+- Make them sound like they were written by a human professional
 
 Original bullet points:
 {chr(10).join([f"- {point}" for point in bullet_points])}
@@ -168,10 +185,10 @@ Original bullet points:
 Please rewrite each bullet point to be more professional and impactful. Return only the rewritten bullet points, one per line, without numbering or bullet symbols:"""
 
         response = openai.chat.completions.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4",
             messages=[{"role": "user", "content": prompt}],
-            max_tokens=500,
-            temperature=0.7,
+            max_tokens=1000,
+            temperature=0.3,
         )
         
         rewritten_text = response.choices[0].message.content.strip()
@@ -202,6 +219,13 @@ def ai_rewrite_project_description():
         bullet_points = data.get('bullet_points', [])
         selected_keywords = data.get('selected_keywords', [])
         
+        # Debug: Print what we received
+        print("=== AI REWRITE PROJECT REQUEST DEBUG ===")
+        print(f"Received data: {data}")
+        print(f"Bullet points: {bullet_points}")
+        print(f"Selected keywords: {selected_keywords}")
+        print("=========================================")
+        
         if not bullet_points:
             return jsonify({'error': 'No bullet points provided'}), 400
         
@@ -209,17 +233,27 @@ def ai_rewrite_project_description():
         keyword_instruction = ""
         if selected_keywords:
             keyword_instruction = f"""
-IMPORTANT: You must naturally incorporate these keywords into the rewritten bullet points: {', '.join(selected_keywords)}
+CRITICAL REQUIREMENT: You MUST include these keywords in your rewritten bullet points: {', '.join(selected_keywords)}
 
-Guidelines for keyword integration:
-- Use the keywords naturally within the context of each bullet point
-- Don't force keywords if they don't fit naturally
-- Maintain professional tone while including keywords
-- Ensure keywords flow naturally with the sentence structure
-- Prioritize readability and impact over keyword stuffing
+MANDATORY INSTRUCTIONS:
+- Each bullet point MUST contain at least one of these keywords
+- Use the keywords naturally within the sentence structure
+- If a keyword doesn't fit naturally, rephrase the bullet point to include it
+- Make sure all keywords are used across the bullet points
+- Prioritize keyword inclusion over perfect flow if necessary
+
+EXAMPLE: If keywords are ["Git", "SQL"], rewrite like:
+"Implemented Git version control and SQL database optimization, resulting in..."
+
+Original Bullet Points:
+{chr(10).join([f"{i+1}. {point}" for i, point in enumerate(bullet_points)])}
+
+Now rewrite all {len(bullet_points)} bullet points using the given instructions.
 """
         
         prompt = f"""You are a professional resume writer. Rewrite the following project description bullet points to make them more impactful, professional, and human-like. 
+
+{keyword_instruction}
 
 Guidelines:
 - Use strong action verbs at the beginning of each bullet point
@@ -230,7 +264,7 @@ Guidelines:
 - Focus on technical results and accomplishments
 - Use industry-standard terminology
 - Make them sound like they were written by a human professional
-- Emphasize the technical complexity and impact of the project{keyword_instruction}
+- Emphasize the technical complexity and impact of the project
 
 Original bullet points:
 {chr(10).join([f"- {point}" for point in bullet_points])}
@@ -238,10 +272,10 @@ Original bullet points:
 Please rewrite each bullet point to be more professional and impactful. Return only the rewritten bullet points, one per line, without numbering or bullet symbols:"""
 
         response = openai.chat.completions.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4",
             messages=[{"role": "user", "content": prompt}],
-            max_tokens=500,
-            temperature=0.7,
+            max_tokens=1000,
+            temperature=0.3,
         )
         
         rewritten_text = response.choices[0].message.content.strip()
