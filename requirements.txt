@@ -2,4 +2,5 @@ flask
 openai
 python-dotenv
 playwright
+weasyprint
 # Note: Use build.sh script to install browsers on Render 

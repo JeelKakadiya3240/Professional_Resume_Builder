@@ -6,6 +6,13 @@ from playwright.sync_api import sync_playwright
 import io
 import asyncio
 
+# Add WeasyPrint import for alternative PDF generation
+try:
+    from weasyprint import HTML
+    WEASYPRINT_AVAILABLE = True
+except ImportError:
+    WEASYPRINT_AVAILABLE = False
+
 load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
@@ -88,27 +95,48 @@ def generate_pdf():
                                     data=data,
                                     template_style=data.get('template', 'modern'))
         
-        # Use Playwright to generate PDF from HTML
-        with sync_playwright() as p:
-            browser = p.chromium.launch()
-            page = browser.new_page()
+        pdf_bytes = None
+        
+        # Try Playwright first (faster and better rendering)
+        try:
+            with sync_playwright() as p:
+                browser = p.chromium.launch()
+                page = browser.new_page()
+                
+                # Set content to the HTML
+                page.set_content(resume_html)
+                
+                # Generate PDF with A4 size and proper styling
+                pdf_bytes = page.pdf(
+                    format='A4',
+                    print_background=True,
+                    margin={
+                        'top': '0.5in',
+                        'right': '0.5in',
+                        'bottom': '0.5in',
+                        'left': '0.5in'
+                    }
+                )
+                
+                browser.close()
+        except Exception as playwright_error:
+            print(f"Playwright PDF generation failed: {playwright_error}")
             
-            # Set content to the HTML
-            page.set_content(resume_html)
-            
-            # Generate PDF with A4 size and proper styling
-            pdf_bytes = page.pdf(
-                format='A4',
-                print_background=True,
-                margin={
-                    'top': '0.5in',
-                    'right': '0.5in',
-                    'bottom': '0.5in',
-                    'left': '0.5in'
-                }
-            )
-            
-            browser.close()
+            # Fallback to WeasyPrint if available
+            if WEASYPRINT_AVAILABLE:
+                try:
+                    # Create HTML object and generate PDF
+                    html_doc = HTML(string=resume_html)
+                    pdf_bytes = html_doc.write_pdf()
+                    print("Successfully generated PDF using WeasyPrint")
+                except Exception as weasyprint_error:
+                    print(f"WeasyPrint PDF generation failed: {weasyprint_error}")
+                    return jsonify({'error': 'PDF generation failed. Please try again later.'}), 500
+            else:
+                return jsonify({'error': 'PDF generation failed. Please try again later.'}), 500
+        
+        if pdf_bytes is None:
+            return jsonify({'error': 'PDF generation failed. Please try again later.'}), 500
         
         # Create a file-like object from the PDF bytes
         pdf_io = io.BytesIO(pdf_bytes)
