@@ -1,4 +1,5 @@
 flask
 openai
 python-dotenv
-playwright 
+playwright
+# Note: Use build.sh script to install browsers on Render 
