@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ATS Keyword Extractor</title>
+    <title>Resume.ai - AI-Powered Resume Builder & ATS Optimizer</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -18,23 +18,22 @@
         }
     </script>
 </head>
-<body class="min-h-screen bg-[#f8fafc] flex flex-col">
+<body class="min-h-screen bg-[#f8fafc]">
     <!-- Header -->
-    <header class="w-full py-3 shadow-sm bg-white">
+    <header class="w-full py-4 shadow-sm bg-white sticky top-0 z-50">
         <div class="w-full px-4 flex flex-row items-center justify-between">
             <h1 class="text-3xl font-extrabold tracking-tight text-left flex items-center gap-2">
-                <span class="text-[#8B4513]">ATS</span>
-                <span class="bg-[#8B4513] text-white px-2 rounded font-extrabold">Keyword</span>
-                <span class="text-[#8B4513]">Extractor</span>
+                <span class="text-[#8B4513]">Resume</span>
+                <span class="bg-[#8B4513] text-white px-2 rounded font-extrabold">.ai</span>
             </h1>
             <div class="flex items-center gap-6">
-                <span class="text-xs text-gray-500 hidden sm:block">AI-powered job description analysis</span>
+                <span class="text-xs text-gray-500 hidden sm:block">AI-powered resume builder</span>
                 <a href="/resume-maker" 
                    class="group relative inline-flex items-center gap-2 bg-gradient-to-r from-[#8B4513] to-[#A0522D] text-white px-4 py-2 rounded-lg font-semibold text-sm transition-all duration-300 hover:shadow-lg hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#8B4513] focus:ring-offset-2">
                     <svg class="w-4 h-4 transition-transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                     </svg>
-                    Resume Maker
+                    Start Building
                     <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                     </svg>
@@ -43,45 +42,263 @@
         </div>
     </header>
 
-    <!-- Main Content -->
-    <main class="flex-1 flex flex-col items-center justify-center px-4 py-8">
-        <section class="w-full max-w-2xl bg-white rounded-xl shadow-lg p-8 border border-gray-100">
-            <h2 class="text-xl font-semibold mb-2 text-gray-800 text-center">Paste Your Job Description</h2>
-            <p class="mb-6 text-center text-gray-600">
-                Get the best keywords to optimize your resume for Applicant Tracking Systems (ATS).
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-br from-[#8B4513] to-[#A0522D] text-white py-20">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <h1 class="text-5xl md:text-6xl font-bold mb-6">
+                Build ATS-Optimized Resumes
+                <span class="block text-4xl md:text-5xl mt-2">with AI Intelligence</span>
+            </h1>
+            <p class="text-xl md:text-2xl mb-8 text-[#F5F5DC] max-w-3xl mx-auto">
+                Create professional resumes that pass Applicant Tracking Systems and get you more interviews. 
+                Powered by advanced AI for keyword optimization and smart content suggestions.
             </p>
-            
-            <form id="keywordForm" class="flex flex-col gap-4">
-                <label for="jobdesc" class="font-medium text-gray-700">
-                    Job Description <span class="text-red-500">*</span>
-                </label>
-                <textarea
-                    id="jobdesc"
-                    class="border border-gray-300 rounded-md p-3 min-h-[140px] resize-vertical focus:outline-none focus:ring-2 focus:ring-[#8B4513] bg-white text-gray-900 text-base"
-                    placeholder="Paste the job description here..."
-                    required
-                ></textarea>
-                <button
-                    type="submit"
-                    id="submitBtn"
-                    class="mt-2 bg-[#8B4513] hover:bg-[#A0522D] text-white font-semibold py-2 px-4 rounded-md transition-colors disabled:opacity-60 focus:outline-none focus:ring-2 focus:ring-[#8B4513]"
-                >
-                    Extract Keywords
-                </button>
-            </form>
-            
-            <div id="error" class="mt-2 text-red-600 text-center hidden"></div>
-            
-            <div id="keywordList" class="mt-8 hidden">
-                <h3 class="text-lg font-semibold mb-3 text-gray-800 text-center">Top ATS Keywords</h3>
-                <ul id="keywordsContainer" class="flex flex-wrap gap-3 justify-center"></ul>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="/resume-maker" 
+                   class="bg-white text-[#8B4513] px-8 py-4 rounded-lg font-bold text-lg hover:bg-gray-100 transition-colors shadow-lg">
+                    Start Building Resume
+                </a>
+                <a href="#how-it-works" 
+                   class="border-2 border-white text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-white hover:text-[#8B4513] transition-colors">
+                    How It Works
+                </a>
             </div>
-        </section>
-    </main>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-6xl mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-16 text-gray-800">
+                Why Choose Resume.ai?
+            </h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="bg-[#f8fafc] p-8 rounded-xl border border-gray-200 hover:shadow-lg transition-shadow">
+                    <div class="w-12 h-12 bg-[#8B4513] rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-gray-800">ATS Keyword Optimization</h3>
+                    <p class="text-gray-600">
+                        Extract relevant keywords from job descriptions and automatically integrate them into your resume for maximum ATS compatibility.
+                    </p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="bg-[#f8fafc] p-8 rounded-xl border border-gray-200 hover:shadow-lg transition-shadow">
+                    <div class="w-12 h-12 bg-[#8B4513] rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-gray-800">AI Content Enhancement</h3>
+                    <p class="text-gray-600">
+                        Use AI to rewrite and enhance your bullet points with powerful action verbs and industry-specific terminology.
+                    </p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="bg-[#f8fafc] p-8 rounded-xl border border-gray-200 hover:shadow-lg transition-shadow">
+                    <div class="w-12 h-12 bg-[#8B4513] rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-gray-800">Professional Templates</h3>
+                    <p class="text-gray-600">
+                        Choose from multiple professional templates (Modern, Classic, Minimal) designed to impress hiring managers.
+                    </p>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="bg-[#f8fafc] p-8 rounded-xl border border-gray-200 hover:shadow-lg transition-shadow">
+                    <div class="w-12 h-12 bg-[#8B4513] rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-gray-800">Real-time Preview</h3>
+                    <p class="text-gray-600">
+                        See your resume update in real-time as you type, with keyword highlighting to track ATS optimization.
+                    </p>
+                </div>
+
+                <!-- Feature 5 -->
+                <div class="bg-[#f8fafc] p-8 rounded-xl border border-gray-200 hover:shadow-lg transition-shadow">
+                    <div class="w-12 h-12 bg-[#8B4513] rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-gray-800">PDF Export</h3>
+                    <p class="text-gray-600">
+                        Download your resume as a professional PDF with perfect formatting for job applications and interviews.
+                    </p>
+                </div>
+
+                <!-- Feature 6 -->
+                <div class="bg-[#f8fafc] p-8 rounded-xl border border-gray-200 hover:shadow-lg transition-shadow">
+                    <div class="w-12 h-12 bg-[#8B4513] rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-gray-800">Lightning Fast</h3>
+                    <p class="text-gray-600">
+                        Built with modern technology for instant keyword extraction and real-time resume generation.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="py-20 bg-gray-50">
+        <div class="max-w-6xl mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-16 text-gray-800">
+                How Resume.ai Works
+            </h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Step 1 -->
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-[#8B4513] rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-white text-2xl font-bold">1</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-gray-800">Extract Keywords</h3>
+                    <p class="text-gray-600">
+                        Paste any job description and our AI instantly extracts the most important keywords that ATS systems look for.
+                    </p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-[#8B4513] rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-white text-2xl font-bold">2</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-gray-800">Build Your Resume</h3>
+                    <p class="text-gray-600">
+                        Fill in your details and use AI to enhance your bullet points with the extracted keywords for maximum impact.
+                    </p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-[#8B4513] rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-white text-2xl font-bold">3</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-gray-800">Download & Apply</h3>
+                    <p class="text-gray-600">
+                        Download your ATS-optimized resume as a professional PDF and start applying with confidence.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Keyword Extractor Demo -->
+    <section class="py-20 bg-white">
+        <div class="max-w-4xl mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-16 text-gray-800">
+                Try Our Keyword Extractor
+            </h2>
+            <div class="bg-white rounded-xl shadow-lg p-8 border border-gray-100">
+                <h3 class="text-xl font-semibold mb-2 text-gray-800 text-center">Paste Your Job Description</h3>
+                <p class="mb-6 text-center text-gray-600">
+                    Get the best keywords to optimize your resume for Applicant Tracking Systems (ATS).
+                </p>
+                
+                <form id="keywordForm" class="flex flex-col gap-4">
+                    <label for="jobdesc" class="font-medium text-gray-700">
+                        Job Description <span class="text-red-500">*</span>
+                    </label>
+                    <textarea
+                        id="jobdesc"
+                        class="border border-gray-300 rounded-md p-3 min-h-[140px] resize-vertical focus:outline-none focus:ring-2 focus:ring-[#8B4513] bg-white text-gray-900 text-base"
+                        placeholder="Paste the job description here..."
+                        required
+                    ></textarea>
+                    <button
+                        type="submit"
+                        id="submitBtn"
+                        class="mt-2 bg-[#8B4513] hover:bg-[#A0522D] text-white font-semibold py-2 px-4 rounded-md transition-colors disabled:opacity-60 focus:outline-none focus:ring-2 focus:ring-[#8B4513]"
+                    >
+                        Extract Keywords
+                    </button>
+                </form>
+                
+                <div id="error" class="mt-2 text-red-600 text-center hidden"></div>
+                
+                <div id="keywordList" class="mt-8 hidden">
+                    <h3 class="text-lg font-semibold mb-3 text-gray-800 text-center">Top ATS Keywords</h3>
+                    <ul id="keywordsContainer" class="flex flex-wrap gap-3 justify-center"></ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-r from-[#8B4513] to-[#A0522D] text-white">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <h2 class="text-4xl font-bold mb-6">
+                Ready to Build Your ATS-Optimized Resume?
+            </h2>
+            <p class="text-xl mb-8 text-[#F5F5DC]">
+                Join thousands of job seekers who are getting more interviews with our AI-powered resume builder.
+            </p>
+            <a href="/resume-maker" 
+               class="bg-white text-[#8B4513] px-8 py-4 rounded-lg font-bold text-lg hover:bg-gray-100 transition-colors shadow-lg inline-block">
+                Start Building Now - It's Free!
+            </a>
+        </div>
+    </section>
 
     <!-- Footer -->
-    <footer class="py-6 text-center text-gray-400 text-xs bg-transparent">
-        &copy; <span id="currentYear"></span> ATS Keyword Extractor. All rights reserved.
+    <footer class="py-8 bg-gray-800 text-white">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Resume.ai</h3>
+                    <p class="text-gray-400 text-sm">
+                        AI-powered resume builder that helps you create ATS-optimized resumes for better job applications.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Features</h4>
+                    <ul class="text-gray-400 text-sm space-y-2">
+                        <li>ATS Keyword Optimization</li>
+                        <li>AI Content Enhancement</li>
+                        <li>Professional Templates</li>
+                        <li>Real-time Preview</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">How It Works</h4>
+                    <ul class="text-gray-400 text-sm space-y-2">
+                        <li>Extract Keywords</li>
+                        <li>Build Resume</li>
+                        <li>Download PDF</li>
+                        <li>Apply with Confidence</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Get Started</h4>
+                    <a href="/resume-maker" class="text-[#8B4513] hover:text-[#A0522D] text-sm block mb-2">
+                        Resume Builder
+                    </a>
+                    <a href="#how-it-works" class="text-[#8B4513] hover:text-[#A0522D] text-sm block">
+                        How It Works
+                    </a>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 pt-6">
+                <p class="text-gray-400 text-sm">
+                    &copy; <span id="currentYear"></span> Resume.ai. All rights reserved.
+                </p>
+            </div>
+        </div>
     </footer>
 
     <script>

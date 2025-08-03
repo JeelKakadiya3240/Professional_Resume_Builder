@@ -7,12 +7,12 @@ import io
 import asyncio
 
 # Add WeasyPrint import for alternative PDF generation
-try:
-    from weasyprint import HTML
-    WEASYPRINT_AVAILABLE = True
-except ImportError:
-    WEASYPRINT_AVAILABLE = False
-
+# try:
+#     from weasyprint import HTML
+#     WEASYPRINT_AVAILABLE = True
+# except ImportError:
+#     WEASYPRINT_AVAILABLE = False
+WEASYPRINT_AVAILABLE = False  
 load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
