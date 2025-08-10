@@ -31,9 +31,21 @@
                 <span class="bg-[#8B4513] text-white px-2 rounded font-extrabold">.ai</span>
             </h1>
             <div class="flex items-center gap-6">
-                <a href="/" class="text-[#8B4513] hover:text-[#A0522D] text-sm font-medium">Home</a>
-                <a href="#how-it-works" class="text-[#8B4513] hover:text-[#A0522D] text-sm font-medium">How It Works</a>
-                <span class="text-xs text-gray-500 hidden sm:block">AI-powered resume builder</span>
+                <div class="flex items-center space-x-4">
+                    <a href="/" class="text-gray-600 hover:text-[#8B4513] transition-colors font-medium">Home</a>
+                    {% if session.get('user_id') %}
+                        <a href="/dashboard" class="text-gray-600 hover:text-[#8B4513] transition-colors font-medium">Dashboard</a>
+                        <button onclick="logout()" class="text-gray-500 hover:text-[#8B4513] transition-colors">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                            </svg>
+                        </button>
+                    {% else %}
+                        <a href="/login-page" class="text-gray-600 hover:text-[#8B4513] transition-colors font-medium px-4 py-2 rounded-lg border border-gray-300 hover:border-[#8B4513]">
+                            Login
+                        </a>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </header>
@@ -295,9 +307,21 @@
 
                 <!-- Action Buttons -->
                 <div class="flex gap-4 pt-4">
-                                    <button type="button" id="previewBtn" class="flex-1 bg-[#8B4513] hover:bg-[#A0522D] text-white font-semibold py-3 px-4 rounded-md transition-colors">
-                    Refresh Preview
-                </button>
+                    {% if session.get('user_id') %}
+                        <button type="button" id="saveBtn" class="flex-1 bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-4 rounded-md transition-colors">
+                            Save Resume
+                        </button>
+                        <button type="button" id="loadLatestBtn" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-md transition-colors">
+                            Load Latest
+                        </button>
+                    {% else %}
+                        <a href="/login-page" class="flex-1 bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-4 rounded-md transition-colors text-center flex items-center justify-center">
+                            Login to Save
+                        </a>
+                    {% endif %}
+                    <button type="button" id="previewBtn" class="flex-1 bg-[#8B4513] hover:bg-[#A0522D] text-white font-semibold py-3 px-4 rounded-md transition-colors">
+                        Refresh Preview
+                    </button>
                     <button type="button" id="downloadPdfBtn" class="flex-1 bg-[#f1bca3] hover:bg-[#A0522D] text-white font-semibold py-3 px-4 rounded-md transition-colors">
                         Download PDF
                     </button>
@@ -2000,6 +2024,368 @@
                     document.body.removeChild(notification);
                 }, 300);
             }, 3000);
+        }
+
+        // Save Resume Functionality
+        function setupSaveButton() {
+            console.log('Setting up save button...');
+            const saveBtn = document.getElementById('saveBtn');
+            const loadLatestBtn = document.getElementById('loadLatestBtn');
+            console.log('Save button found:', saveBtn);
+            console.log('Load Latest button found:', loadLatestBtn);
+            
+            if (saveBtn) {
+                console.log('Adding click event listener to save button...');
+                
+                saveBtn.addEventListener('click', async function() {
+                    console.log('Save button clicked!');
+                    
+                    try {
+                        console.log('Getting form data...');
+                        // Get all form data
+                        const formData = getAllFormData();
+                        console.log('Form data:', formData);
+                        
+                        // Validate required fields
+                        if (!formData.name || !formData.email || !formData.phone || !formData.summary) {
+                            console.log('Validation failed - missing required fields');
+                            showNotification('Please fill in all required fields (Name, Email, Phone, Summary)', 'error');
+                            return;
+                        }
+
+                        console.log('Validation passed, preparing to save...');
+
+                        // Show loading state
+                        const originalText = this.textContent;
+                        this.textContent = 'Saving...';
+                        this.disabled = true;
+
+                        console.log('Sending request to /save-resume...');
+                        const response = await fetch('/save-resume', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(formData)
+                        });
+
+                        console.log('Response received:', response.status, response.statusText);
+                        const result = await response.json();
+                        console.log('Response data:', result);
+
+                        if (response.ok && result.success) {
+                            showNotification('Resume saved successfully!', 'success');
+                        } else {
+                            throw new Error(result.error || 'Failed to save resume');
+                        }
+                    } catch (error) {
+                        console.error('Save error:', error);
+                        showNotification('Failed to save resume. Please try again.', 'error');
+                    } finally {
+                        // Reset button
+                        this.textContent = 'Save Resume';
+                        this.disabled = false;
+                    }
+                });
+                console.log('Click event listener added successfully');
+            } else {
+                console.error('Save button not found!');
+            }
+            
+            // Setup Load Latest button
+            if (loadLatestBtn) {
+                console.log('Adding click event listener to load latest button...');
+                loadLatestBtn.addEventListener('click', async function() {
+                    console.log('Load Latest button clicked!');
+                    await autoLoadLatestResume();
+                });
+                console.log('Load Latest event listener added successfully');
+            } else {
+                console.log('Load Latest button not found (user not logged in)');
+            }
+        }
+
+        // Load Resume Functionality
+        function loadResumeFromStorage() {
+            const loadResumeFile = localStorage.getItem('loadResumeFile');
+            if (loadResumeFile) {
+                // Clear the flag
+                localStorage.removeItem('loadResumeFile');
+                
+                // Load the resume
+                loadResume(loadResumeFile);
+            }
+        }
+
+        async function loadResume(filename) {
+            try {
+                const response = await fetch(`/load-resume/${encodeURIComponent(filename)}`);
+                const result = await response.json();
+
+                if (response.ok && result.resume) {
+                    // Populate form with resume data
+                    populateFormWithData(result.resume);
+                    showNotification('Resume loaded successfully!', 'success');
+                } else {
+                    throw new Error(result.error || 'Failed to load resume');
+                }
+            } catch (error) {
+                console.error('Load error:', error);
+                showNotification('Failed to load resume. Please try again.', 'error');
+            }
+        }
+
+        function populateFormWithData(data) {
+            console.log('Populating form with data:', data);
+            
+            try {
+                // Personal Information
+                if (data.name && document.getElementById('name')) {
+                    document.getElementById('name').value = data.name;
+                    console.log('Set name:', data.name);
+                }
+                if (data.email && document.getElementById('email')) {
+                    document.getElementById('email').value = data.email;
+                    console.log('Set email:', data.email);
+                }
+                if (data.phone && document.getElementById('phone')) {
+                    document.getElementById('phone').value = data.phone;
+                    console.log('Set phone:', data.phone);
+                }
+                if (data.location && document.getElementById('location')) {
+                    document.getElementById('location').value = data.location;
+                    console.log('Set location:', data.location);
+                }
+                if (data.linkedin && document.getElementById('linkedin')) {
+                    document.getElementById('linkedin').value = data.linkedin;
+                    console.log('Set linkedin:', data.linkedin);
+                }
+                if (data.website && document.getElementById('website')) {
+                    document.getElementById('website').value = data.website;
+                    console.log('Set website:', data.website);
+                }
+                if (data.summary && document.getElementById('summary')) {
+                    document.getElementById('summary').value = data.summary;
+                    console.log('Set summary:', data.summary);
+                }
+
+                // Job Description and Keywords
+                if (data.job_description && document.getElementById('job_description')) {
+                    document.getElementById('job_description').value = data.job_description;
+                    console.log('Set job_description:', data.job_description);
+                }
+                if (data.selected_keywords) {
+                    window.selectedKeywords = data.selected_keywords;
+                    if (typeof updateKeywordDisplay === 'function') {
+                        updateKeywordDisplay();
+                    }
+                    console.log('Set selected_keywords:', data.selected_keywords);
+                }
+
+                // Skills
+                if (data.skills && data.skills.length > 0) {
+                    const skillsContainer = document.getElementById('skillsContainer');
+                    if (skillsContainer) {
+                        skillsContainer.innerHTML = '';
+                        data.skills.forEach(skill => {
+                            if (typeof addSkill === 'function') {
+                                addSkill(skill);
+                            }
+                        });
+                        console.log('Set skills:', data.skills);
+                    }
+                }
+
+                // Experience
+                if (data.experience && data.experience.length > 0) {
+                    const experienceContainer = document.getElementById('experienceContainer');
+                    if (experienceContainer) {
+                        experienceContainer.innerHTML = '';
+                        data.experience.forEach(exp => {
+                            if (typeof addExperience === 'function') {
+                                addExperience(exp);
+                            }
+                        });
+                        console.log('Set experience:', data.experience);
+                    }
+                }
+
+                // Education
+                if (data.education && data.education.length > 0) {
+                    const educationContainer = document.getElementById('educationContainer');
+                    if (educationContainer) {
+                        educationContainer.innerHTML = '';
+                        data.education.forEach(edu => {
+                            if (typeof addEducation === 'function') {
+                                addEducation(edu);
+                            }
+                        });
+                        console.log('Set education:', data.education);
+                    }
+                }
+
+                // Projects
+                if (data.projects && data.projects.length > 0) {
+                    const projectsContainer = document.getElementById('projectsContainer');
+                    if (projectsContainer) {
+                        projectsContainer.innerHTML = '';
+                        data.projects.forEach(project => {
+                            if (typeof addProject === 'function') {
+                                addProject(project);
+                            }
+                        });
+                        console.log('Set projects:', data.projects);
+                    }
+                }
+
+                // Update preview
+                if (typeof updateResumePreview === 'function') {
+                    updateResumePreview();
+                }
+                
+                console.log('Form populated successfully!');
+                
+            } catch (error) {
+                console.error('Error populating form:', error);
+            }
+        }
+
+        function getAllFormData() {
+            console.log('Getting form data...');
+            
+            try {
+                const formData = {
+                    name: document.getElementById('name')?.value || '',
+                    email: document.getElementById('email')?.value || '',
+                    phone: document.getElementById('phone')?.value || '',
+                    location: document.getElementById('location')?.value || '',
+                    linkedin: document.getElementById('linkedin')?.value || '',
+                    website: document.getElementById('website')?.value || '',
+                    summary: document.getElementById('summary')?.value || '',
+                    job_description: document.getElementById('job_description')?.value || '',
+                    selected_keywords: window.selectedKeywords || [],
+                    skills: getSkills(),
+                    experience: getExperience(),
+                    education: getEducation(),
+                    projects: getProjects()
+                };
+                
+                console.log('Form data collected successfully:', formData);
+                return formData;
+            } catch (error) {
+                console.error('Error getting form data:', error);
+                throw error;
+            }
+        }
+
+        function getSkills() {
+            const skillElements = document.querySelectorAll('.skill-item input[type="text"]');
+            return Array.from(skillElements).map(el => el.value).filter(skill => skill.trim() !== '');
+        }
+
+        function getExperience() {
+            const experienceItems = document.querySelectorAll('.experience-item');
+            return Array.from(experienceItems).map(item => {
+                const inputs = item.querySelectorAll('input, textarea');
+                const experience = {};
+                inputs.forEach(input => {
+                    experience[input.name] = input.value;
+                });
+                
+                // Get bullet points
+                const bulletPoints = item.querySelectorAll('input[name="experience_points[]"]');
+                experience.points = Array.from(bulletPoints).map(point => point.value).filter(point => point.trim() !== '');
+                
+                return experience;
+            });
+        }
+
+        function getEducation() {
+            const educationItems = document.querySelectorAll('.education-item');
+            return Array.from(educationItems).map(item => {
+                const inputs = item.querySelectorAll('input');
+                const education = {};
+                inputs.forEach(input => {
+                    education[input.name] = input.value;
+                });
+                return education;
+            });
+        }
+
+        function getProjects() {
+            const projectItems = document.querySelectorAll('.project-item');
+            return Array.from(projectItems).map(item => {
+                const inputs = item.querySelectorAll('input, textarea');
+                const project = {};
+                inputs.forEach(input => {
+                    project[input.name] = input.value;
+                });
+                
+                // Get bullet points
+                const bulletPoints = item.querySelectorAll('input[name="project_description_points[]"]');
+                project.points = Array.from(bulletPoints).map(point => point.value).filter(point => point.trim() !== '');
+                
+                return project;
+            });
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                window.location.href = '/logout';
+            }
+        }
+
+        // Load resume on page load if needed
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded, setting up page...');
+            loadResumeFromStorage();
+            setupSaveButton();
+            
+            // Auto-load user's latest resume if logged in
+            autoLoadLatestResume();
+        });
+        
+        // Auto-load user's latest resume
+        async function autoLoadLatestResume() {
+            try {
+                console.log('Checking if user has saved resumes...');
+                
+                // Check if user is logged in by trying to access dashboard
+                const dashboardResponse = await fetch('/dashboard', { method: 'GET' });
+                if (dashboardResponse.status === 200) {
+                    console.log('User is logged in, fetching latest resume...');
+                    
+                    // Get user's resumes
+                    const response = await fetch('/get-resumes');
+                    const result = await response.json();
+                    
+                    if (response.ok && result.resumes && result.resumes.length > 0) {
+                        // Get the most recent resume (last in the array)
+                        const latestResume = result.resumes[result.resumes.length - 1];
+                        console.log('Latest resume found:', latestResume.filename);
+                        
+                        // Load the resume data
+                        const loadResponse = await fetch(`/load-resume/${encodeURIComponent(latestResume.filename)}`);
+                        const loadResult = await loadResponse.json();
+                        
+                        if (loadResponse.ok && loadResult.resume) {
+                            console.log('Resume data received:', loadResult.resume);
+                            // Populate form with resume data
+                            populateFormWithData(loadResult.resume);
+                            showNotification('Your latest resume has been loaded automatically!', 'success');
+                            console.log('Resume auto-loaded successfully');
+                        } else {
+                            console.log('Failed to load resume data:', loadResult);
+                        }
+                    } else {
+                        console.log('No saved resumes found');
+                    }
+                } else {
+                    console.log('User not logged in, skipping auto-load');
+                }
+            } catch (error) {
+                console.error('Error auto-loading resume:', error);
+            }
         }
 
     </script>
