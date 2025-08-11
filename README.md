@@ -285,11 +285,7 @@ python app.py
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🆘 Support
 
-- **Documentation**: Check this README for detailed instructions
-- **Issues**: Report bugs and feature requests via GitHub Issues
-- **Email**: Contact support at support@resumebuilder.com
 
 ## 🔄 Version History
 
