@@ -114,7 +114,7 @@
 </head>
 <body>
 <div class="container">
-    <!-- Header -->
+    <!-- Header (Always First) -->
     <div class="resume-header">
         <div class="name">{{ data.name|upper }}</div>
         <div class="contact">
@@ -122,113 +122,114 @@
         </div>
     </div>
 
-    <!-- Professional Summary -->
-    {% if data.summary %}
-    <div class="section-title">PROFESSIONAL SUMMARY</div>
-    <div style="margin-bottom: 12px; text-align: justify; text-justify: inter-word;">{{ data.summary }}</div>
-    {% endif %}
-
-    <!-- Education -->
-    {% if data.degree and data.degree[0] %}
-    <div class="section-title">EDUCATION</div>
-    {% for i in range(data.degree|length) %}
-    {% if data.degree[i] %}
-    <div class="edu-row">
-        <div class="edu-left">
-            <div class="edu-univ">{{ data.institution[i] if data.institution and data.institution[i] else 'University Name' }}</div>
-            <div class="edu-degree">{{ data.degree[i] }}{% if data.program and data.program[i] %}, {{ data.program[i] }}{% endif %}</div>
-        </div>
-        <div class="edu-right">
-            <div class="edu-dates">
-                {% if data.start_date and data.start_date[i] %}{{ data.start_date[i] }}{% endif %}
-                {% if data.end_date and data.end_date[i] %} - {{ data.end_date[i] }}{% endif %}
+    <!-- Dynamic Sections Based on Order -->
+    {% set section_order = section_order or ['summary', 'skills', 'experience', 'education', 'projects'] %}
+    
+    {% for section in section_order %}
+        {% if section == 'summary' and data.summary %}
+            <!-- Professional Summary -->
+            <div class="section-title">PROFESSIONAL SUMMARY</div>
+            <div style="margin-bottom: 12px; text-align: justify; text-justify: inter-word;">{{ data.summary }}</div>
+        
+        {% elif section == 'skills' and data.skills %}
+            <!-- Skills -->
+            <div class="section-title">SKILLS</div>
+            <div class="skills-section">
+                {% for skill_cat in data.skills.split(';') %}
+                    {% set parts = skill_cat.split(':') %}
+                    {% if parts|length == 2 %}
+                        <span class="skills-category">{{ parts[0] }}:</span>
+                        <span class="skills-list">{{ parts[1] }}</span><br/>
+                    {% else %}
+                        <span class="skills-list">{{ skill_cat }}</span><br/>
+                    {% endif %}
+                {% endfor %}
             </div>
-            {% if data.gpa and data.gpa[i] %}
-            <div class="edu-gpa">GPA: {{ data.gpa[i] }}</div>
+        
+        {% elif section == 'experience' and data.job_title and data.job_title[0] %}
+            <!-- Professional Experience -->
+            <div class="section-title">PROFESSIONAL EXPERIENCE</div>
+            {% for i in range(data.job_title|length) %}
+            {% if data.job_title[i] %}
+            <div class="exp-row">
+                <div class="exp-left">
+                    <div class="exp-company">{{ data.company[i] if data.company and data.company[i] else 'Company Name' }}</div>
+                    <div class="exp-role">{{ data.job_title[i] }}</div>
+                </div>
+                <div class="exp-right">
+                    <div class="exp-location">{% if data.exp_location and data.exp_location[i] %}{{ data.exp_location[i] }}{% endif %}</div>
+                    <div class="exp-dates">
+                        {% if data.start_date and data.start_date[i] %}{{ data.start_date[i] }}{% endif %}
+                        {% if data.end_date and data.end_date[i] %} - {{ data.end_date[i] }}{% endif %}
+                    </div>
+                </div>
+            </div>
+            {% if data.job_description and data.job_description[i] %}
+            <ul class="bullets">
+                {% for point in data.job_description[i] %}
+                {% if point.strip() %}
+                <li>{{ point.strip() }}.</li>
+                {% endif %}
+                {% endfor %}
+            </ul>
             {% endif %}
-        </div>
-    </div>
-    {% endif %}
-    {% endfor %}
-    {% endif %}
-
-    <!-- Professional Experience -->
-    {% if data.job_title and data.job_title[0] %}
-    <div class="section-title">PROFESSIONAL EXPERIENCE</div>
-    {% for i in range(data.job_title|length) %}
-    {% if data.job_title[i] %}
-    <div class="exp-row">
-        <div class="exp-left">
-            <div class="exp-company">{{ data.company[i] if data.company and data.company[i] else 'Company Name' }}</div>
-            <div class="exp-role">{{ data.job_title[i] }}</div>
-        </div>
-        <div class="exp-right">
-            <div class="exp-location">{% if data.exp_location and data.exp_location[i] %}{{ data.exp_location[i] }}{% endif %}</div>
-            <div class="exp-dates">
-                {% if data.start_date and data.start_date[i] %}{{ data.start_date[i] }}{% endif %}
-                {% if data.end_date and data.end_date[i] %} - {{ data.end_date[i] }}{% endif %}
-            </div>
-        </div>
-    </div>
-    {% if data.job_description and data.job_description[i] %}
-    <ul class="bullets">
-        {% for point in data.job_description[i] %}
-        {% if point.strip() %}
-        <li>{{ point.strip() }}.</li>
-        {% endif %}
-        {% endfor %}
-    </ul>
-    {% endif %}
-    {% endif %}
-    {% endfor %}
-    {% endif %}
-
-    <!-- Projects & Outside Experience -->
-    {% if data.project_title and data.project_title[0] %}
-    <div class="section-title">PROJECTS & OUTSIDE EXPERIENCE</div>
-    {% for i in range(data.project_title|length) %}
-    {% if data.project_title[i] %}
-    <div class="proj-row">
-        <div class="proj-left">
-            <div class="proj-title">{{ data.project_title[i] }}</div>
-            <div class="proj-role">{% if data.project_role and data.project_role[i] %}{{ data.project_role[i] }}{% endif %}</div>
-        </div>
-        <div class="proj-right">
-            <div class="proj-location">{% if data.project_location and data.project_location[i] %}{{ data.project_location[i] }}{% endif %}</div>
-            <div class="proj-dates">
-                {% if data.project_start and data.project_start[i] %}{{ data.project_start[i] }}{% endif %}
-                {% if data.project_end and data.project_end[i] %} - {{ data.project_end[i] }}{% endif %}
-            </div>
-        </div>
-    </div>
-    {% if data.project_description and data.project_description[i] %}
-    <ul class="bullets">
-        {% for point in data.project_description[i] %}
-        {% if point.strip() %}
-        <li>{{ point.strip() }}.</li>
-        {% endif %}
-        {% endfor %}
-    </ul>
-    {% endif %}
-    {% endif %}
-    {% endfor %}
-    {% endif %}
-
-    <!-- Skills -->
-    {% if data.skills %}
-    <div class="section-title">SKILLS</div>
-    <div class="skills-section">
-        {% for skill_cat in data.skills.split(';') %}
-            {% set parts = skill_cat.split(':') %}
-            {% if parts|length == 2 %}
-                <span class="skills-category">{{ parts[0] }}:</span>
-                <span class="skills-list">{{ parts[1] }}</span><br/>
-            {% else %}
-                <span class="skills-list">{{ skill_cat }}</span><br/>
             {% endif %}
-        {% endfor %}
-    </div>
-    {% endif %}
+            {% endfor %}
+        
+        {% elif section == 'education' and data.degree and data.degree[0] %}
+            <!-- Education -->
+            <div class="section-title">EDUCATION</div>
+            {% for i in range(data.degree|length) %}
+            {% if data.degree[i] %}
+            <div class="edu-row">
+                <div class="edu-left">
+                    <div class="edu-univ">{{ data.institution[i] if data.institution and data.institution[i] else 'University Name' }}</div>
+                    <div class="edu-degree">{{ data.degree[i] }}{% if data.program and data.program[i] %}, {{ data.program[i] }}{% endif %}</div>
+                </div>
+                <div class="edu-right">
+                    <div class="edu-dates">
+                        {% if data.start_date and data.start_date[i] %}{{ data.start_date[i] }}{% endif %}
+                        {% if data.end_date and data.end_date[i] %} - {{ data.end_date[i] }}{% endif %}
+                    </div>
+                    {% if data.gpa and data.gpa[i] %}
+                    <div class="edu-gpa">GPA: {{ data.gpa[i] }}</div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        
+        {% elif section == 'projects' and data.project_title and data.project_title[0] %}
+            <!-- Projects & Outside Experience -->
+            <div class="section-title">PROJECTS & OUTSIDE EXPERIENCE</div>
+            {% for i in range(data.project_title|length) %}
+            {% if data.project_title[i] %}
+            <div class="proj-row">
+                <div class="proj-left">
+                    <div class="proj-title">{{ data.project_title[i] }}</div>
+                    <div class="proj-role">{% if data.project_role and data.project_role[i] %}{{ data.project_role[i] }}{% endif %}</div>
+                </div>
+                <div class="proj-right">
+                    <div class="proj-location">{% if data.project_location and data.project_location[i] %}{{ data.project_location[i] }}{% endif %}</div>
+                    <div class="proj-dates">
+                        {% if data.project_start and data.project_start[i] %}{{ data.project_start[i] }}{% endif %}
+                        {% if data.project_end and data.project_end[i] %} - {{ data.project_end[i] }}{% endif %}
+                    </div>
+                </div>
+            </div>
+            {% if data.project_description and data.project_description[i] %}
+            <ul class="bullets">
+                {% for point in data.project_description[i] %}
+                {% if point.strip() %}
+                <li>{{ point.strip() }}.</li>
+                {% endif %}
+                {% endfor %}
+            </ul>
+            {% endif %}
+            {% endif %}
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
 </div>
 </body>
 </html> 

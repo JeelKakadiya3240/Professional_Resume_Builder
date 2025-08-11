@@ -66,6 +66,259 @@
             height: 100%;
             overflow-y: auto;
         }
+
+        /* AI Typing Animation Styles */
+        .ai-typing-container {
+            position: relative;
+            background: linear-gradient(135deg, #8B4513 0%, #A0522D 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 10px 0;
+            color: white;
+            box-shadow: 0 8px 32px rgba(139, 69, 19, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .ai-typing-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .ai-typing-indicator {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .ai-typing-dots {
+            display: flex;
+            gap: 3px;
+        }
+
+        .ai-typing-dot {
+            width: 6px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            animation: typingPulse 1.4s infinite ease-in-out;
+        }
+
+        .ai-typing-dot:nth-child(1) { animation-delay: -0.32s; }
+        .ai-typing-dot:nth-child(2) { animation-delay: -0.16s; }
+        .ai-typing-dot:nth-child(3) { animation-delay: 0s; }
+
+        @keyframes typingPulse {
+            0%, 80%, 100% {
+                transform: scale(0.8);
+                opacity: 0.5;
+            }
+            40% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .ai-typing-text {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            min-height: 20px;
+        }
+
+        .ai-typing-cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1.2em;
+            background: white;
+            animation: blink 1s infinite;
+            margin-left: 2px;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        .ai-button {
+            background: linear-gradient(135deg, #8B4513 0%, #A0522D 100%);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ai-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(139, 69, 19, 0.4);
+        }
+
+        .ai-button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .ai-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .ai-button:hover::before {
+            left: 100%;
+        }
+
+        .ai-icon {
+            width: 16px;
+            height: 16px;
+        }
+
+        .ai-processing {
+            background: linear-gradient(135deg, #D2691E 0%, #CD853F 100%);
+        }
+
+        .ai-success {
+            background: linear-gradient(135deg, #228B22 0%, #32CD32 100%);
+        }
+
+        /* Force brown colors and override any cached styles */
+        .ai-typing-container {
+            background: linear-gradient(135deg, #8B4513 0%, #A0522D 100%) !important;
+            box-shadow: 0 8px 32px rgba(139, 69, 19, 0.3) !important;
+        }
+
+        .ai-button {
+            background: linear-gradient(135deg, #8B4513 0%, #A0522D 100%) !important;
+        }
+
+        .ai-button:hover {
+            box-shadow: 0 8px 25px rgba(139, 69, 19, 0.4) !important;
+        }
+
+        .ai-processing {
+            background: linear-gradient(135deg, #D2691E 0%, #CD853F 100%) !important;
+        }
+
+        /* Override any purple focus rings */
+        input:focus, textarea:focus {
+            --tw-ring-color: #8B4513 !important;
+        }
+
+        /* Additional overrides to ensure brown colors */
+        div.ai-typing-container {
+            background: linear-gradient(135deg, #8B4513 0%, #A0522D 100%) !important;
+            background-image: linear-gradient(135deg, #8B4513 0%, #A0522D 100%) !important;
+        }
+
+        button.ai-button {
+            background: linear-gradient(135deg, #8B4513 0%, #A0522D 100%) !important;
+            background-image: linear-gradient(135deg, #8B4513 0%, #A0522D 100%) !important;
+        }
+
+        /* Override any inline styles or other CSS */
+        *[class*="ai-typing-container"] {
+            background: linear-gradient(135deg, #8B4513 0%, #A0522D 100%) !important;
+        }
+
+        *[class*="ai-button"] {
+            background: linear-gradient(135deg, #8B4513 0%, #A0522D 100%) !important;
+        }
+
+        /* Drag and Drop Section Reordering Styles */
+        .section-container {
+            position: relative;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .section-container:hover {
+            border-color: #e5e7eb;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-container.dragging {
+            opacity: 0.5;
+            transform: rotate(2deg);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .section-container.drag-over {
+            border-color: #8B4513;
+            background-color: #fef7f0;
+        }
+
+        .section-drag-handle {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 32px;
+            height: 32px;
+            background: #f3f4f6;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: grab;
+            transition: all 0.2s ease;
+            z-index: 10;
+        }
+
+        .section-drag-handle:hover {
+            background: #e5e7eb;
+            border-color: #9ca3af;
+        }
+
+        .section-drag-handle:active {
+            cursor: grabbing;
+            background: #d1d5db;
+        }
+
+        .section-drag-handle svg {
+            width: 16px;
+            height: 16px;
+            color: #6b7280;
+        }
+
+        .section-header {
+            position: relative;
+            padding-right: 48px;
+        }
+
+        .reorder-instructions {
+            background: linear-gradient(135deg, #8B4513 0%, #A0522D 100%);
+            color: white;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .reorder-instructions svg {
+            width: 18px;
+            height: 18px;
+        }
     </style>
 
     <!-- Breadcrumb Navigation -->
@@ -77,16 +330,89 @@
         </div>
     </div>
 
+    <!-- Job Description Modal -->
+    <div id="jobDescriptionModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden transition-opacity duration-300">
+        <div class="bg-white rounded-lg p-6 max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto transform transition-transform duration-300 scale-95">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold text-gray-800">Job Description & Keywords</h3>
+                <button id="closeJobDescriptionModal" class="text-gray-500 hover:text-gray-700 text-2xl font-bold">
+                    ×
+                </button>
+            </div>
+            
+            <div class="space-y-6">
+                <!-- Job Description Input -->
+                <div class="space-y-4">
+                    <h4 class="text-lg font-semibold text-gray-700 border-b pb-2">Paste Job Description</h4>
+                    <div class="space-y-3">
+                        <textarea id="jobDescriptionForKeywords" name="jobDescriptionForKeywords" rows="6"
+                                  class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#8B4513]"
+                                  placeholder="Paste the job description here to extract relevant keywords for your resume..."></textarea>
+                        <button type="button" id="extractKeywordsBtn" 
+                                class="ai-button font-semibold py-3 px-6">
+                            <svg class="ai-icon" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            Extract Keywords
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Keywords Display -->
+                <div id="keywordsContainer" class="hidden">
+                    <h4 class="text-lg font-semibold text-gray-700 border-b pb-2 mb-4">Extracted Keywords</h4>
+                    <div id="keywordsList" class="flex flex-wrap gap-2 mb-4"></div>
+                    <div class="text-sm text-gray-600 bg-gray-50 p-3 rounded-md">
+                        <strong>How to use:</strong> Click on keywords to select them. Selected keywords will be available for AI rewriting of your resume bullet points.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex justify-end gap-3 mt-6 pt-4 border-t">
+                <button id="closeJobDescriptionModalBtn" class="px-4 py-2 text-gray-600 hover:text-gray-800 border border-gray-300 rounded-md">
+                    Close
+                </button>
+                <button id="applyKeywordsBtn" class="px-4 py-2 bg-[#8B4513] text-white rounded-md hover:bg-[#A0522D]">
+                    Apply Keywords
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Main Content - Left Right Layout -->
     <main class="resume-main">
         <!-- Left Side - Form -->
         <section class="resume-form-section lg:w-1/2 bg-white p-6 border-r border-gray-200 overflow-y-auto">
-            <h2 class="text-2xl font-bold text-gray-800 mb-6">Resume Information</h2>
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-800">Resume Information</h2>
+                <button id="openJobDescriptionModal" class="ai-button font-semibold py-2 px-4">
+                    <svg class="ai-icon" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M12 6V4a2 2 0 00-2-2H4a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V8a2 2 0 00-2-2h-2V6a2 2 0 00-2-2h-2a2 2 0 00-2 2z"/>
+                    </svg>
+                    Add Job Description
+                </button>
+            </div>
+            
+
             
             <form id="resumeForm" class="space-y-6">
+                <!-- Reorder Instructions -->
+                <div class="reorder-instructions">
+                    <svg fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M7 2a2 2 0 1 1 .001 4.001A2 2 0 0 1 7 2zm0 6a2 2 0 1 1 .001 4.001A2 2 0 0 1 7 8zm0 6a2 2 0 1 1 .001 4.001A2 2 0 0 1 7 14zm6-8a2 2 0 1 1-.001-4.001A2 2 0 0 1 13 6zm0 2a2 2 0 1 1 .001 4.001A2 2 0 0 1 13 8zm0 6a2 2 0 1 1 .001 4.001A2 2 0 0 1 13 14z"/>
+                    </svg>
+                    <span>Drag sections to reorder your resume. The order here will be reflected in your final resume.</span>
+                </div>
+
                 <!-- Personal Information -->
-                <div class="space-y-4">
-                    <h3 class="text-lg font-semibold text-gray-700 border-b pb-2">Personal Information</h3>
+                <div class="section-container" draggable="true" data-section="personal">
+                    <div class="section-drag-handle">
+                        <svg fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M7 2a2 2 0 1 1 .001 4.001A2 2 0 0 1 7 2zm0 6a2 2 0 1 1 .001 4.001A2 2 0 0 1 7 8zm0 6a2 2 0 1 1 .001 4.001A2 2 0 0 1 7 14zm6-8a2 2 0 1 1-.001-4.001A2 2 0 0 1 13 6zm0 2a2 2 0 1 1 .001 4.001A2 2 0 0 1 13 8zm0 6a2 2 0 1 1 .001 4.001A2 2 0 0 1 13 14z"/>
+                        </svg>
+                    </div>
+                    <div class="space-y-4 p-4">
+                        <h3 class="text-lg font-semibold text-gray-700 border-b pb-2 section-header">Personal Information</h3>
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
@@ -116,48 +442,48 @@
                         <input type="url" id="linkedin" name="linkedin"
                                class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500">
                     </div>
-                </div>
-
-                <!-- Job Description for Keywords -->
-                <div class="space-y-4">
-                    <h3 class="text-lg font-semibold text-gray-700 border-b pb-2">Job Description for Keywords</h3>
-                    <div class="space-y-3">
-                        <textarea id="jobDescriptionForKeywords" name="jobDescriptionForKeywords" rows="4"
-                                  class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#8B4513]"
-                                  placeholder="Paste the job description to extract relevant keywords for your resume..."></textarea>
-                        <button type="button" id="extractKeywordsBtn" 
-                                class="bg-[#8B4513] hover:bg-[#A0522D] text-white font-semibold py-2 px-4 rounded-md transition-colors">
-                            Extract Keywords
-                        </button>
-                    </div>
-                    
-                    <!-- Keywords Display -->
-                    <div id="keywordsContainer" class="hidden">
-                        <h4 class="text-sm font-medium text-gray-700 mb-2">Extracted Keywords:</h4>
-                        <div id="keywordsList" class="flex flex-wrap gap-2 mb-3"></div>
-                        <div class="text-xs text-gray-500">Selected keywords will be available for AI rewriting</div>
                     </div>
                 </div>
 
                 <!-- Professional Summary -->
-                <div class="space-y-4">
-                    <h3 class="text-lg font-semibold text-gray-700 border-b pb-2">Professional Summary *</h3>
-                    <textarea id="summary" name="summary" required rows="4"
-                              class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#8B4513]"
-                              placeholder="Write a compelling professional summary..."></textarea>
+                <div class="section-container" draggable="true" data-section="summary">
+                    <div class="section-drag-handle">
+                        <svg fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M7 2a2 2 0 1 1 .001 4.001A2 2 0 0 1 7 2zm0 6a2 2 0 1 1 .001 4.001A2 2 0 0 1 7 8zm0 6a2 2 0 1 1 .001 4.001A2 2 0 0 1 7 14zm6-8a2 2 0 1 1-.001-4.001A2 2 0 0 1 13 6zm0 2a2 2 0 1 1 .001 4.001A2 2 0 0 1 13 8zm0 6a2 2 0 1 1 .001 4.001A2 2 0 0 1 13 14z"/>
+                        </svg>
+                    </div>
+                    <div class="space-y-4 p-4">
+                        <h3 class="text-lg font-semibold text-gray-700 border-b pb-2 section-header">Professional Summary *</h3>
+                        <textarea id="summary" name="summary" required rows="4"
+                                  class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#8B4513]"
+                                  placeholder="Write a compelling professional summary..."></textarea>
+                    </div>
                 </div>
 
                 <!-- Skills -->
-                <div class="space-y-4">
-                    <h3 class="text-lg font-semibold text-gray-700 border-b pb-2">Skills</h3>
-                    <textarea id="skills" name="skills" rows="3"
-                              class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
-                              placeholder="Enter skills separated by commas (e.g., Python, JavaScript, React)"></textarea>
+                <div class="section-container" draggable="true" data-section="skills">
+                    <div class="section-drag-handle">
+                        <svg fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M7 2a2 2 0 1 1 .001 4.001A2 2 0 0 1 7 2zm0 6a2 2 0 1 1 .001 4.001A2 2 0 0 1 7 8zm0 6a2 2 0 1 1 .001 4.001A2 2 0 0 1 7 14zm6-8a2 2 0 1 1-.001-4.001A2 2 0 0 1 13 6zm0 2a2 2 0 1 1 .001 4.001A2 2 0 0 1 13 8zm0 6a2 2 0 1 1 .001 4.001A2 2 0 0 1 13 14z"/>
+                        </svg>
+                    </div>
+                    <div class="space-y-4 p-4">
+                        <h3 class="text-lg font-semibold text-gray-700 border-b pb-2 section-header">Skills</h3>
+                        <textarea id="skills" name="skills" rows="3"
+                                  class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                                  placeholder="Enter skills separated by commas (e.g., Python, JavaScript, React)"></textarea>
+                    </div>
                 </div>
 
                 <!-- Experience -->
-                <div class="space-y-4">
-                    <h3 class="text-lg font-semibold text-gray-700 border-b pb-2">Work Experience</h3>
+                <div class="section-container" draggable="true" data-section="experience">
+                    <div class="section-drag-handle">
+                        <svg fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M7 2a2 2 0 1 1 .001 4.001A2 2 0 0 1 7 2zm0 6a2 2 0 1 1 .001 4.001A2 2 0 0 1 7 8zm0 6a2 2 0 1 1 .001 4.001A2 2 0 0 1 7 14zm6-8a2 2 0 1 1-.001-4.001A2 2 0 0 1 13 6zm0 2a2 2 0 1 1 .001 4.001A2 2 0 0 1 13 8zm0 6a2 2 0 1 1 .001 4.001A2 2 0 0 1 13 14z"/>
+                        </svg>
+                    </div>
+                    <div class="space-y-4 p-4">
+                        <h3 class="text-lg font-semibold text-gray-700 border-b pb-2 section-header">Work Experience</h3>
                     <div id="experienceContainer" class="space-y-4">
                         <div class="experience-item border border-gray-200 rounded-lg p-4">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
@@ -182,7 +508,12 @@
                                 <div class="flex justify-between items-center">
                                     <label class="block text-sm font-medium text-gray-700">Job Description (Bullet Points)</label>
                                     <div class="flex gap-2">
-                                        <button type="button" class="ai-rewrite-btn bg-[#8B4513] hover:bg-[#A0522D] text-white text-xs px-3 py-1 rounded-md transition-colors">🤖 AI Rewrite</button>
+                                        <button type="button" class="ai-rewrite-btn ai-button text-xs">
+                                            <svg class="ai-icon" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                            </svg>
+                                            AI Rewrite
+                                        </button>
                                         <button type="button" class="add-bullet-point text-[#8B4513] hover:text-[#A0522D] text-sm font-medium">+ Add Point</button>
                                     </div>
                                 </div>
@@ -201,11 +532,18 @@
                         </div>
                     </div>
                     <button type="button" id="addExperience" class="text-[#8B4513] hover:text-[#A0522D] text-sm font-medium">+ Add Experience</button>
+                    </div>
                 </div>
 
                 <!-- Education -->
-                <div class="space-y-4">
-                    <h3 class="text-lg font-semibold text-gray-700 border-b pb-2">Education</h3>
+                <div class="section-container" draggable="true" data-section="education">
+                    <div class="section-drag-handle">
+                        <svg fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M7 2a2 2 0 1 1 .001 4.001A2 2 0 0 1 7 2zm0 6a2 2 0 1 1 .001 4.001A2 2 0 0 1 7 8zm0 6a2 2 0 1 1 .001 4.001A2 2 0 0 1 7 14zm6-8a2 2 0 1 1-.001-4.001A2 2 0 0 1 13 6zm0 2a2 2 0 1 1 .001 4.001A2 2 0 0 1 13 8zm0 6a2 2 0 1 1 .001 4.001A2 2 0 0 1 13 14z"/>
+                        </svg>
+                    </div>
+                    <div class="space-y-4 p-4">
+                        <h3 class="text-lg font-semibold text-gray-700 border-b pb-2 section-header">Education</h3>
                     <div id="educationContainer" class="space-y-4">
                         <div class="education-item border border-gray-200 rounded-lg p-4">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
@@ -241,11 +579,18 @@
                         </div>
                     </div>
                     <button type="button" id="addEducation" class="text-[#8B4513] hover:text-[#A0522D] text-sm font-medium">+ Add Education</button>
+                    </div>
                 </div>
 
                 <!-- Projects -->
-                <div class="space-y-4">
-                    <h3 class="text-lg font-semibold text-gray-700 border-b pb-2">Projects</h3>
+                <div class="section-container" draggable="true" data-section="projects">
+                    <div class="section-drag-handle">
+                        <svg fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M7 2a2 2 0 1 1 .001 4.001A2 2 0 0 1 7 2zm0 6a2 2 0 1 1 .001 4.001A2 2 0 0 1 7 8zm0 6a2 2 0 1 1 .001 4.001A2 2 0 0 1 7 14zm6-8a2 2 0 1 1-.001-4.001A2 2 0 0 1 13 6zm0 2a2 2 0 1 1 .001 4.001A2 2 0 0 1 13 8zm0 6a2 2 0 1 1 .001 4.001A2 2 0 0 1 13 14z"/>
+                        </svg>
+                    </div>
+                    <div class="space-y-4 p-4">
+                        <h3 class="text-lg font-semibold text-gray-700 border-b pb-2 section-header">Projects</h3>
                     <div id="projectContainer" class="space-y-4">
                         <div class="project-item border border-gray-200 rounded-lg p-4">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
@@ -274,7 +619,12 @@
                                 <div class="flex justify-between items-center">
                                     <label class="block text-sm font-medium text-gray-700">Project Description (Bullet Points)</label>
                                     <div class="flex gap-2">
-                                        <button type="button" class="ai-rewrite-project-btn bg-[#8B4513] hover:bg-[#A0522D] text-white text-xs px-3 py-1 rounded-md transition-colors">🤖 AI Rewrite</button>
+                                        <button type="button" class="ai-rewrite-project-btn ai-button text-xs">
+                                            <svg class="ai-icon" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                            </svg>
+                                            AI Rewrite
+                                        </button>
                                         <button type="button" class="add-project-bullet-point text-[#8B4513] hover:text-[#A0522D] text-sm font-medium">+ Add Point</button>
                                     </div>
                                 </div>
@@ -293,16 +643,24 @@
                         </div>
                     </div>
                     <button type="button" id="addProject" class="text-[#8B4513] hover:text-[#A0522D] text-sm font-medium">+ Add Project</button>
+                    </div>
                 </div>
 
                 <!-- Template Selection -->
-                <div class="space-y-4">
-                    <h3 class="text-lg font-semibold text-gray-700 border-b pb-2">Resume Template</h3>
-                    <select id="template" name="template" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500">
-                        <option value="modern">Modern</option>
-                        <option value="classic">Classic</option>
-                        <option value="minimal">Minimal</option>
-                    </select>
+                <div class="section-container" draggable="true" data-section="template">
+                    <div class="section-drag-handle">
+                        <svg fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M7 2a2 2 0 1 1 .001 4.001A2 2 0 0 1 7 2zm0 6a2 2 0 1 1 .001 4.001A2 2 0 0 1 7 8zm0 6a2 2 0 1 1 .001 4.001A2 2 0 0 1 7 14zm6-8a2 2 0 1 1-.001-4.001A2 2 0 0 1 13 6zm0 2a2 2 0 1 1 .001 4.001A2 2 0 0 1 13 8zm0 6a2 2 0 1 1 .001 4.001A2 2 0 0 1 13 14z"/>
+                        </svg>
+                    </div>
+                    <div class="space-y-4 p-4">
+                        <h3 class="text-lg font-semibold text-gray-700 border-b pb-2 section-header">Resume Template</h3>
+                        <select id="template" name="template" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500">
+                            <option value="modern">Modern</option>
+                            <option value="classic">Classic</option>
+                            <option value="minimal">Minimal</option>
+                        </select>
+                    </div>
                 </div>
 
                 <!-- Action Buttons -->
@@ -311,7 +669,7 @@
                         <button type="button" id="saveBtn" class="flex-1 bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-4 rounded-md transition-colors">
                             Save Resume
                         </button>
-                        <button type="button" id="loadLatestBtn" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-md transition-colors">
+                        <button type="button" id="loadLatestBtn" class="flex-1 bg-[#8B4513] hover:bg-[#A0522D] text-white font-semibold py-3 px-4 rounded-md transition-colors">
                             Load Latest
                         </button>
                     {% else %}
@@ -558,6 +916,246 @@
         // Global keywords storage
         let extractedKeywords = [];
         
+        // Job Description Modal Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const modal = document.getElementById('jobDescriptionModal');
+            const openBtn = document.getElementById('openJobDescriptionModal');
+            const closeBtn = document.getElementById('closeJobDescriptionModal');
+            const closeBtn2 = document.getElementById('closeJobDescriptionModalBtn');
+            const applyBtn = document.getElementById('applyKeywordsBtn');
+            
+            // Open modal
+            openBtn.addEventListener('click', function() {
+                modal.classList.remove('hidden');
+                const modalContent = modal.querySelector('div');
+                modalContent.classList.remove('scale-95');
+                modalContent.classList.add('scale-100');
+                document.body.style.overflow = 'hidden'; // Prevent background scrolling
+            });
+            
+            // Close modal functions
+            function closeModal() {
+                const modalContent = modal.querySelector('div');
+                modalContent.classList.remove('scale-100');
+                modalContent.classList.add('scale-95');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    document.body.style.overflow = 'auto'; // Restore scrolling
+                }, 200);
+            }
+            
+            closeBtn.addEventListener('click', closeModal);
+            closeBtn2.addEventListener('click', closeModal);
+            applyBtn.addEventListener('click', closeModal);
+            
+            // Close modal when clicking outside
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+            
+            // Close modal with Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+                    closeModal();
+                }
+            });
+        });
+
+        // Section Reordering Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('resumeForm');
+            const sections = form.querySelectorAll('.section-container');
+            let draggedElement = null;
+
+            // Initialize drag and drop for all sections
+            sections.forEach(section => {
+                section.addEventListener('dragstart', handleDragStart);
+                section.addEventListener('dragend', handleDragEnd);
+                section.addEventListener('dragover', handleDragOver);
+                section.addEventListener('drop', handleDrop);
+                section.addEventListener('dragenter', handleDragEnter);
+                section.addEventListener('dragleave', handleDragLeave);
+            });
+
+            function handleDragStart(e) {
+                draggedElement = this;
+                this.classList.add('dragging');
+                e.dataTransfer.effectAllowed = 'move';
+                e.dataTransfer.setData('text/html', this.outerHTML);
+            }
+
+            function handleDragEnd(e) {
+                this.classList.remove('dragging');
+                draggedElement = null;
+                
+                // Remove drag-over styling from all sections
+                sections.forEach(section => {
+                    section.classList.remove('drag-over');
+                });
+            }
+
+            function handleDragOver(e) {
+                e.preventDefault();
+                e.dataTransfer.dropEffect = 'move';
+            }
+
+            function handleDragEnter(e) {
+                e.preventDefault();
+                if (this !== draggedElement) {
+                    this.classList.add('drag-over');
+                }
+            }
+
+            function handleDragLeave(e) {
+                // Only remove if we're not dragging over a child element
+                if (!this.contains(e.relatedTarget)) {
+                    this.classList.remove('drag-over');
+                }
+            }
+
+            function handleDrop(e) {
+                e.preventDefault();
+                this.classList.remove('drag-over');
+                
+                if (draggedElement && this !== draggedElement) {
+                    // Get the position of the dragged element and the drop target
+                    const draggedIndex = Array.from(sections).indexOf(draggedElement);
+                    const dropIndex = Array.from(sections).indexOf(this);
+                    
+                    // Reorder the sections
+                    if (draggedIndex < dropIndex) {
+                        this.parentNode.insertBefore(draggedElement, this.nextSibling);
+                    } else {
+                        this.parentNode.insertBefore(draggedElement, this);
+                    }
+                    
+                    // Save the new order
+                    saveSectionOrder();
+                    
+                    // Update preview to reflect new order
+                    setTimeout(() => {
+                        updateResumePreview();
+                    }, 100);
+                }
+            }
+
+            // Save section order to localStorage
+            function saveSectionOrder() {
+                const currentOrder = Array.from(sections).map(section => section.dataset.section);
+                localStorage.setItem('resumeSectionOrder', JSON.stringify(currentOrder));
+            }
+
+            // Load section order from localStorage
+            function loadSectionOrder() {
+                const savedOrder = localStorage.getItem('resumeSectionOrder');
+                if (savedOrder) {
+                    const order = JSON.parse(savedOrder);
+                    const form = document.getElementById('resumeForm');
+                    
+                    // Reorder sections based on saved order
+                    order.forEach(sectionName => {
+                        const section = form.querySelector(`[data-section="${sectionName}"]`);
+                        if (section) {
+                            form.appendChild(section);
+                        }
+                    });
+                }
+            }
+
+            // Load saved order on page load
+            loadSectionOrder();
+        });
+        
+        // AI Typing Animation Functions
+        function createTypingContainer(container, title = "AI is rewriting your content...") {
+            const typingContainer = document.createElement('div');
+            typingContainer.className = 'ai-typing-container';
+            typingContainer.innerHTML = `
+                <div class="ai-typing-header">
+                    <div class="ai-typing-indicator">
+                        <svg class="ai-icon" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        ${title}
+                        <div class="ai-typing-dots">
+                            <div class="ai-typing-dot"></div>
+                            <div class="ai-typing-dot"></div>
+                            <div class="ai-typing-dot"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ai-typing-text" id="typing-text"></div>
+            `;
+            
+            // Insert before the container
+            container.parentNode.insertBefore(typingContainer, container);
+            return typingContainer;
+        }
+        
+        function typeText(element, text, speed = 30) {
+            return new Promise((resolve) => {
+                let index = 0;
+                element.textContent = '';
+                
+                function typeChar() {
+                    if (index < text.length) {
+                        element.textContent += text[index];
+                        index++;
+                        setTimeout(typeChar, speed);
+                    } else {
+                        // Add cursor at the end
+                        element.innerHTML += '<span class="ai-typing-cursor"></span>';
+                        setTimeout(() => {
+                            element.innerHTML = element.innerHTML.replace('<span class="ai-typing-cursor"></span>', '');
+                            resolve();
+                        }, 1000);
+                    }
+                }
+                
+                typeChar();
+            });
+        }
+        
+        function typeMultipleTexts(element, texts, speed = 30) {
+            return new Promise(async (resolve) => {
+                element.textContent = '';
+                
+                for (let i = 0; i < texts.length; i++) {
+                    const text = texts[i];
+                    let index = 0;
+                    
+                    // Type each character
+                    while (index < text.length) {
+                        element.textContent += text[index];
+                        index++;
+                        await new Promise(resolve => setTimeout(resolve, speed));
+                    }
+                    
+                    // Add cursor and pause
+                    element.innerHTML += '<span class="ai-typing-cursor"></span>';
+                    await new Promise(resolve => setTimeout(resolve, 800));
+                    element.innerHTML = element.innerHTML.replace('<span class="ai-typing-cursor"></span>', '');
+                    
+                    // Add line break if not the last item
+                    if (i < texts.length - 1) {
+                        element.textContent += '\n';
+                        await new Promise(resolve => setTimeout(resolve, 300));
+                    }
+                }
+                
+                resolve();
+            });
+        }
+        
+        function removeTypingContainer(container) {
+            const typingContainer = container.parentNode.querySelector('.ai-typing-container');
+            if (typingContainer) {
+                typingContainer.remove();
+            }
+        }
+        
         // Keyword extraction functionality
         document.getElementById('extractKeywordsBtn').addEventListener('click', async function() {
             const jobDescription = document.getElementById('jobDescriptionForKeywords').value.trim();
@@ -570,15 +1168,28 @@
             // Show loading state
             const btn = this;
             btn.disabled = true;
+            btn.classList.add('ai-processing');
             btn.innerHTML = `
                 <svg class="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
                 </svg>
-                Extracting...
+                Analyzing...
             `;
             
+            // Create typing animation container
+            const keywordsContainer = document.getElementById('keywordsContainer');
+            const typingContainer = createTypingContainer(keywordsContainer, "AI is analyzing your job description...");
+            const typingText = typingContainer.querySelector('#typing-text');
+            
             try {
+                // Show initial typing message
+                await typeText(typingText, "Reading and analyzing the job description...", 40);
+                await new Promise(resolve => setTimeout(resolve, 500));
+                
+                await typeText(typingText, "Identifying key skills, technologies, and requirements...", 40);
+                await new Promise(resolve => setTimeout(resolve, 300));
+                
                 const response = await fetch('/extract-keywords', {
                     method: 'POST',
                     headers: {
@@ -590,19 +1201,71 @@
                 const data = await response.json();
                 
                 if (response.ok && data.keywords) {
+                    await typeText(typingText, "Extracting relevant keywords and skills...", 40);
+                    await new Promise(resolve => setTimeout(resolve, 300));
+                    
                     extractedKeywords = data.keywords;
+                    
+                    // Type the keywords as they're found
+                    await typeText(typingText, `Found ${data.keywords.length} relevant keywords:`, 40);
+                    await new Promise(resolve => setTimeout(resolve, 500));
+                    
+                    // Type each keyword
+                    for (let i = 0; i < Math.min(data.keywords.length, 5); i++) {
+                        await typeText(typingText, `• ${data.keywords[i]}`, 30);
+                        await new Promise(resolve => setTimeout(resolve, 200));
+                    }
+                    
+                    if (data.keywords.length > 5) {
+                        await typeText(typingText, `... and ${data.keywords.length - 5} more keywords`, 40);
+                    }
+                    
+                    await new Promise(resolve => setTimeout(resolve, 1000));
+                    
+                    // Remove typing container
+                    removeTypingContainer(keywordsContainer);
+                    
                     displayKeywords(data.keywords);
                     saveKeywordsToStorage(data.keywords);
                     // Calculate keyword coverage with new keywords
                     calculateKeywordCoverage();
+                    
+                    // Show success state
+                    btn.classList.remove('ai-processing');
+                    btn.classList.add('ai-success');
+                    btn.innerHTML = `
+                        <svg class="ai-icon" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        Extracted!
+                    `;
+                    
+                    setTimeout(() => {
+                        btn.classList.remove('ai-success');
+                        btn.innerHTML = `
+                            <svg class="ai-icon" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            Extract Keywords
+                        `;
+                    }, 2000);
                 } else {
-                    alert('Failed to extract keywords. Please try again.');
+                    throw new Error('Failed to extract keywords');
                 }
             } catch (err) {
+                removeTypingContainer(keywordsContainer);
                 alert('Failed to extract keywords. Please check your connection.');
             } finally {
                 btn.disabled = false;
-                btn.textContent = 'Extract Keywords';
+                if (!btn.classList.contains('ai-success')) {
+                    btn.classList.remove('ai-processing');
+                    btn.innerHTML = `
+                        <svg class="ai-icon" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        Extract Keywords
+                    `;
+                }
             }
         });
         
@@ -626,7 +1289,7 @@
         // Toggle keyword selection
         function toggleKeywordSelection(element, keyword) {
             element.classList.toggle('bg-[#8B4513]');
-                                        element.classList.toggle('bg-green-600');
+            element.classList.toggle('bg-green-600');
             
             if (element.classList.contains('bg-green-600')) {
                 if (!window.selectedKeywords) window.selectedKeywords = [];
@@ -637,6 +1300,8 @@
             
             saveKeywordsToStorage(extractedKeywords);
         }
+        
+
         
         // Save keywords to localStorage
         function saveKeywordsToStorage(keywords) {
@@ -1036,6 +1701,10 @@
             
             // Add template
             data.template = document.getElementById('template').value;
+            
+            // Add section order
+            const sections = document.querySelectorAll('.section-container');
+            data.section_order = Array.from(sections).map(section => section.dataset.section);
             
             try {
                 const response = await fetch('/generate-resume', {
@@ -1856,6 +2525,14 @@
                 });
                 console.log("===================================");
                 
+                // Create typing animation container
+                const typingContainer = createTypingContainer(bulletPointsContainer, "AI is rewriting your job description...");
+                const typingText = typingContainer.querySelector('#typing-text');
+                
+                // Show initial typing message
+                await typeText(typingText, "Analyzing your bullet points and selected keywords...", 40);
+                await new Promise(resolve => setTimeout(resolve, 500));
+                
                 const response = await fetch('/ai-rewrite-job-description', {
                     method: 'POST',
                     headers: {
@@ -1871,13 +2548,27 @@
                     const result = await response.json();
                     const rewrittenPoints = result.rewritten_points;
                     
+                    // Type the rewritten points with animation
+                    await typeText(typingText, "Generating improved bullet points...", 40);
+                    await new Promise(resolve => setTimeout(resolve, 300));
+                    
+                    // Type each rewritten point
+                    await typeMultipleTexts(typingText, rewrittenPoints, 35);
+                    
+                    // Wait a moment to show completion
+                    await new Promise(resolve => setTimeout(resolve, 1000));
+                    
+                    // Remove typing container
+                    removeTypingContainer(bulletPointsContainer);
+                    
                     // Clear existing bullet points
                     bulletPointsContainer.innerHTML = '';
                     
-                    // Add rewritten bullet points
+                    // Add rewritten bullet points with fade-in effect
                     rewrittenPoints.forEach((point, index) => {
                         const bulletPointItem = document.createElement('div');
-                        bulletPointItem.className = 'bullet-point-item flex gap-2';
+                        bulletPointItem.className = 'bullet-point-item flex gap-2 opacity-0';
+                        bulletPointItem.style.transition = 'opacity 0.5s ease-in-out';
                         bulletPointItem.draggable = true;
                         
                         bulletPointItem.innerHTML = `
@@ -1891,6 +2582,11 @@
                         `;
                         
                         bulletPointsContainer.appendChild(bulletPointItem);
+                        
+                        // Fade in effect with staggered timing
+                        setTimeout(() => {
+                            bulletPointItem.style.opacity = '1';
+                        }, index * 200);
                     });
                     
                     // Re-attach event listeners for the new bullet points
@@ -1912,10 +2608,16 @@
             } catch (error) {
                 console.error('AI rewrite error:', error);
                 showNotification('Failed to rewrite job description. Please try again.', 'error');
+                removeTypingContainer(bulletPointsContainer);
             } finally {
                 // Reset button
                 button.disabled = false;
-                button.textContent = originalText;
+                button.innerHTML = `
+                    <svg class="ai-icon" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    AI Rewrite
+                `;
             }
         }
 
@@ -1933,6 +2635,14 @@
                 });
                 console.log("=========================================");
                 
+                // Create typing animation container
+                const typingContainer = createTypingContainer(bulletPointsContainer, "AI is rewriting your project description...");
+                const typingText = typingContainer.querySelector('#typing-text');
+                
+                // Show initial typing message
+                await typeText(typingText, "Analyzing your project bullet points and selected keywords...", 40);
+                await new Promise(resolve => setTimeout(resolve, 500));
+                
                 const response = await fetch('/ai-rewrite-project-description', {
                     method: 'POST',
                     headers: {
@@ -1948,13 +2658,27 @@
                     const result = await response.json();
                     const rewrittenPoints = result.rewritten_points;
                     
+                    // Type the rewritten points with animation
+                    await typeText(typingText, "Generating improved project bullet points...", 40);
+                    await new Promise(resolve => setTimeout(resolve, 300));
+                    
+                    // Type each rewritten point
+                    await typeMultipleTexts(typingText, rewrittenPoints, 35);
+                    
+                    // Wait a moment to show completion
+                    await new Promise(resolve => setTimeout(resolve, 1000));
+                    
+                    // Remove typing container
+                    removeTypingContainer(bulletPointsContainer);
+                    
                     // Clear existing bullet points
                     bulletPointsContainer.innerHTML = '';
                     
-                    // Add rewritten bullet points
+                    // Add rewritten bullet points with fade-in effect
                     rewrittenPoints.forEach((point, index) => {
                         const bulletPointItem = document.createElement('div');
-                        bulletPointItem.className = 'bullet-point-item flex gap-2';
+                        bulletPointItem.className = 'bullet-point-item flex gap-2 opacity-0';
+                        bulletPointItem.style.transition = 'opacity 0.5s ease-in-out';
                         bulletPointItem.draggable = true;
                         
                         bulletPointItem.innerHTML = `
@@ -1968,6 +2692,11 @@
                         `;
                         
                         bulletPointsContainer.appendChild(bulletPointItem);
+                        
+                        // Fade in effect with staggered timing
+                        setTimeout(() => {
+                            bulletPointItem.style.opacity = '1';
+                        }, index * 200);
                     });
                     
                     // Re-attach event listeners for the new bullet points
@@ -1989,10 +2718,16 @@
             } catch (error) {
                 console.error('AI rewrite error:', error);
                 showNotification('Failed to rewrite project description. Please try again.', 'error');
+                removeTypingContainer(bulletPointsContainer);
             } finally {
                 // Reset button
                 button.disabled = false;
-                button.textContent = originalText;
+                button.innerHTML = `
+                    <svg class="ai-icon" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    AI Rewrite
+                `;
             }
         }
 
@@ -2267,7 +3002,8 @@
                     skills: getSkills(),
                     experience: getExperience(),
                     education: getEducation(),
-                    projects: getProjects()
+                    projects: getProjects(),
+                    section_order: getSectionOrder()
                 };
                 
                 console.log('Form data collected successfully:', formData);
@@ -2276,6 +3012,11 @@
                 console.error('Error getting form data:', error);
                 throw error;
             }
+        }
+
+        function getSectionOrder() {
+            const sections = document.querySelectorAll('.section-container');
+            return Array.from(sections).map(section => section.dataset.section);
         }
 
         function getSkills() {

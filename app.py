@@ -84,7 +84,7 @@ app.secret_key = os.getenv("FLASK_SECRET_KEY", secrets.token_hex(32))
 app.config.update(
     SESSION_COOKIE_NAME="resumeai",
     SESSION_COOKIE_SAMESITE="Lax",   # fine for top-level redirects
-    SESSION_COOKIE_SECURE=True,      # True for production HTTPS
+    SESSION_COOKIE_SECURE=True,      # True for production HTTPSgit
 )
 
 def login_required(f):
@@ -525,7 +525,8 @@ def generate_resume():
         # Generate resume HTML
         resume_html = render_template('resume_template.html', 
                                     data=data,
-                                    template_style=data.get('template', 'modern'))
+                                    template_style=data.get('template', 'modern'),
+                                    section_order=data.get('section_order', []))
         
         return jsonify({'resume_html': resume_html})
         
@@ -547,7 +548,8 @@ def generate_pdf():
         # Generate resume HTML (exact same as preview)
         resume_html = render_template('resume_template.html', 
                                     data=data,
-                                    template_style=data.get('template', 'modern'))
+                                    template_style=data.get('template', 'modern'),
+                                    section_order=data.get('section_order', []))
         
         pdf_bytes = None
         
