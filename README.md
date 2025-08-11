@@ -242,21 +242,6 @@ resume-builder/
    - Attach policies for S3, DynamoDB, and Cognito
    - Generate access keys
 
-### Environment Variables
-
-| Variable | Description | Required |
-|----------|-------------|----------|
-| `FLASK_SECRET_KEY` | Flask session encryption | Yes |
-| `AWS_ACCESS_KEY_ID` | AWS access key | Yes |
-| `AWS_SECRET_ACCESS_KEY` | AWS secret key | Yes |
-| `AWS_REGION` | AWS region | Yes |
-| `COGNITO_USER_POOL_ID` | Cognito user pool ID | Yes |
-| `COGNITO_APP_CLIENT_ID` | Cognito app client ID | Yes |
-| `COGNITO_APP_CLIENT_SECRET` | Cognito app client secret | Yes |
-| `COGNITO_DOMAIN` | Cognito hosted UI domain | Yes |
-| `S3_BUCKET_NAME` | S3 bucket for resumes | Yes |
-| `DYNAMODB_TABLE_NAME` | DynamoDB table name | Yes |
-| `OPENAI_API_KEY` | OpenAI API key | Yes |
 
 ## 🚀 Deployment
 
