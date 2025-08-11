@@ -7,6 +7,9 @@ A modern, feature-rich web application for creating professional resumes with dr
 ![Flask](https://img.shields.io/badge/Flask-2.0+-orange)
 ![AWS](https://img.shields.io/badge/AWS-Integrated-yellow)
 
+
+🌐 **[Live Demo](https://job-gwr2.onrender.com/)** - Try it now!
+
 ## ✨ Features
 
 ### 🤖 **AI-Powered Resume Enhancement**
