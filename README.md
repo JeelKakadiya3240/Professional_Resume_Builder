@@ -9,6 +9,13 @@ A modern, feature-rich web application for creating professional resumes with dr
 
 ## ✨ Features
 
+### 🤖 **AI-Powered Resume Enhancement**
+- **Smart keyword extraction** from job descriptions using advanced AI
+- **Intelligent bullet point rewriting** for professional impact
+- **ATS optimization** with relevant keywords and phrases
+- **Real-time AI assistance** for better job descriptions
+- **Professional content suggestions** to improve resume quality
+
 ### 🎨 **Modern Resume Templates**
 - **Professional LaTeX-style formatting** for academic and professional use
 - **Multiple template options** (Modern, Classic, Minimal)
@@ -26,7 +33,7 @@ A modern, feature-rich web application for creating professional resumes with dr
 - **Professional Summary** - Compelling career overview
 - **Education** - Academic background with GPA and coursework
 - **Technical Skills** - Categorized skill sets
-- **Professional Experience** - Work history with achievements
+- **Prgofessional Experience** - Work history with achievements
 - **Academic Projects** - Project experience and contributions
 - **Other Work Experience** - Additional employment history
 - **Activities** - Extracurricular involvement and leadership
@@ -44,11 +51,7 @@ A modern, feature-rich web application for creating professional resumes with dr
 - **Data privacy** - Your information stays secure
 - **Session management** for seamless experience
 
-### 🎯 **Smart Content Enhancement**
-- **Keyword extraction** from job descriptions
-- **Content optimization** for better ATS compatibility
-- **Professional writing suggestions**
-- **Bullet point enhancement**
+
 
 ## 🛠️ Technology Stack
 
@@ -60,6 +63,7 @@ A modern, feature-rich web application for creating professional resumes with dr
   - **S3** - Resume storage
   - **DynamoDB** - User data management
 - **Playwright** - PDF generation
+- **OpenAI API** - AI-powered content enhancement
 
 ### Frontend
 - **HTML5/CSS3** - Modern web standards
@@ -150,16 +154,19 @@ A modern, feature-rich web application for creating professional resumes with dr
 5. **List Technical Skills**
    - Organize skills by categories (e.g., "Programming: Python, JavaScript")
    - Use semicolons to separate different skill categories
+   - **AI Keyword Integration**: Use extracted keywords from job descriptions to enhance your skills section
 
 6. **Add Work Experience**
    - Include job title, company, location, and dates
    - Add detailed bullet points for achievements
    - Use action verbs and quantify results
+   - **AI Enhancement**: Click "AI Rewrite" to improve bullet points with professional language
 
 7. **Include Projects**
    - Add academic or personal projects
    - Describe your role and key contributions
    - Highlight technologies and outcomes
+   - **AI Enhancement**: Use "AI Rewrite" to enhance project descriptions
 
 8. **Reorder Sections**
    - Drag and drop sections to your preferred order
@@ -183,10 +190,12 @@ A modern, feature-rich web application for creating professional resumes with dr
 - Print-ready format for job applications
 - Maintains all formatting and styling
 
-#### **Content Enhancement**
-- Use the "Add Job Description" modal
-- Extract relevant keywords automatically
-- Enhance bullet points with professional suggestions
+#### **AI-Powered Content Enhancement**
+- **Job Description Analysis**: Upload job descriptions to extract relevant keywords
+- **Smart Keyword Extraction**: AI automatically identifies important skills and requirements
+- **Bullet Point Rewriting**: Transform basic descriptions into professional, impactful statements
+- **ATS Optimization**: Ensure your resume contains the right keywords for applicant tracking systems
+- **Real-time AI Assistance**: Get instant suggestions while writing your resume
 
 ## 🏗️ Project Structure
 
