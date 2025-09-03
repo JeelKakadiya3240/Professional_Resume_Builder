@@ -8,7 +8,7 @@ A modern, feature-rich web application for creating professional resumes with dr
 ![AWS](https://img.shields.io/badge/AWS-Integrated-yellow)
 
 
-🌐 **[Live Demo](https://job-gwr2.onrender.com/)** - Try it now!
+🌐 **[Live Demo](https://job-gwr2.onrender.com/)** - Try it now! ( to open may be it take time due to local hosting)
 
 ## ✨ Features
 
