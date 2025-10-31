@@ -6,12 +6,10 @@ A modern, feature-rich web application for creating professional resumes with dr
 ![Python](https://img.shields.io/badge/Python-3.11+-green)
 ![Flask](https://img.shields.io/badge/Flask-2.0+-orange)
 ![AWS](https://img.shields.io/badge/AWS-Integrated-yellow)
+
+##
 🌐 **[Live Demo](https://professional-resume-builder-7pkt21vsj-jeel-kakadiyas-projects.vercel.app/)** )
-<img width="1440" height="900" alt="Screenshot 2025-10-16 at 3 51 46 PM" src="https://github.com/user-attachments/assets/6d1e3646-1214-4204-a4ea-93b0fb23a1e3" />
-<img width="1440" height="900" alt="Screenshot 2025-10-16 at 3 51 59 PM" src="https://github.com/user-attachments/assets/e4c8c1ae-3fc7-40ba-aa83-b49def9df1fd" />
-<img width="1440" height="900" alt="Screenshot 2025-10-16 at 3 52 13 PM" src="https://github.com/user-attachments/assets/0730cbcd-6eb4-4ebf-836c-fc715c0d2e68" />
-<img width="1440" height="900" alt="Screenshot 2025-10-16 at 3 52 36 PM" src="https://github.com/user-attachments/assets/3a523b9c-9a4d-465b-9ea6-5d3d17f5d252" />
-<img width="1440" height="900" alt="Screenshot 2025-10-16 at 3 52 48 PM" src="https://github.com/user-attachments/assets/a806cb01-66f3-4ba2-a529-4b432367a701" />
+
 
 
 
